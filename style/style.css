@@ -13,6 +13,7 @@ body{
 header, footer{
     background-color: darkcyan;
     color: white;
+    height: 50px;
     padding: 5px 80px;
 }
 

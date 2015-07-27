@@ -1,4 +1,5 @@
 ﻿/// <reference path="D:\New courses\9 JavaScript UI and DOM\TeamworkPaintDotBg\TeamworkPaintDotBg\libs/kinetic-v5.1.0.js" />
+/// <reference path="D:\New courses\9 JavaScript UI and DOM\TeamworkPaintDotBg\TeamworkPaintDotBg\controls.js" />
 
 (function () {
     window.onload = function() {
@@ -115,35 +116,48 @@
         var square = new Kinetic.Rect(new FilledRectangleControl(5, 80, 60, 60, 'white', 'black', 1));
         var image = new ImageControl(30, 30, 200, 200, 'https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcTBWymOLW11o8_b8vm5kPzFTvd4I5HrS-vcHcZKlRBrlTSRvxDd7tJs_ucK', 'black', 4);
 
+        drawText(toolBox, toolBoxLayer, 15, 15, 'Tools');
+        drawLineToolBox(toolBox, toolBoxLayer, 15, 45);
+        drawRectToolBox(toolBox, toolBoxLayer, 75, 45);
+        drawCircleToolBox(toolBox, toolBoxLayer, 135, 45);
+        drawTriangleToolBox(toolBox, toolBoxLayer, 15, 105);
+        drawText(toolBox, toolBoxLayer, 15, 175, 'Stroke and fill');
+        drawRectToolBox(toolBox, toolBoxLayer, 15, 210, null, 'blue')
+        drawRectToolBox(toolBox, toolBoxLayer, 75, 210, 'blue')
+        drawLineToolBox(toolBox, toolBoxLayer, 135, 210, 2);
+        drawLineToolBox(toolBox, toolBoxLayer, 15, 270, 4);
+        drawLineToolBox(toolBox, toolBoxLayer, 75, 270, 8);
+        drawLineToolBox(toolBox, toolBoxLayer, 135, 270, 12);
+
         var palette = [
-            new FilledRectangleControl(0, 0, 30, 120, 'rgb(0, 128, 255)', 'black', 4),
-            new FilledRectangleControl(30, 0, 30, 120, 'rgb(0, 128, 192)', 'black', 4),
-            new FilledRectangleControl(60, 0, 30, 120, 'rgb(0, 64, 128)', 'black', 4),
-            new FilledRectangleControl(90, 0, 30, 120, 'rgb(0, 0, 255)', 'black', 4),
-            new FilledRectangleControl(120, 0, 30, 120, 'rgb(0, 0, 160)', 'black', 4),
-            new FilledRectangleControl(150, 0, 30, 120, 'rgb(0, 0, 128)', 'black', 4),
-            new FilledRectangleControl(180, 0, 30, 120, 'rgb(0, 0, 64)', 'black', 4),
-            new FilledRectangleControl(0, 120, 30, 120, 'rgb(255, 128, 128)', 'black', 4),
-            new FilledRectangleControl(30, 120, 30, 120, 'rgb(255, 0, 0)', 'black', 4),
-            new FilledRectangleControl(60, 120, 30, 120, 'rgb(255, 128, 64)', 'black', 4),
-            new FilledRectangleControl(90, 120, 30, 120, 'rgb(255, 128, 0)', 'black', 4),
-            new FilledRectangleControl(120, 120, 30, 120, 'rgb(128, 64, 0)', 'black', 4),
-            new FilledRectangleControl(150, 120, 30, 120, 'rgb(128, 0, 0)', 'black', 4),
-            new FilledRectangleControl(180, 120, 30, 120, 'rgb(64, 0, 0)', 'black', 4),
-            new FilledRectangleControl(0, 240, 30, 120, 'rgb(0, 255, 128)', 'black', 4),
-            new FilledRectangleControl(30, 240, 30, 120, 'rgb(0, 255, 64)', 'black', 4),
-            new FilledRectangleControl(60, 240, 30, 120, 'rgb(128, 255, 0)', 'black', 4),
-            new FilledRectangleControl(90, 240, 30, 120, 'rgb(0, 255, 0)', 'black', 4),
-            new FilledRectangleControl(120, 240, 30, 120, 'rgb(0, 128, 0)', 'black', 4),
-            new FilledRectangleControl(150, 240, 30, 120, 'rgb(0, 64, 0)', 'black', 4),
-            new FilledRectangleControl(180, 240, 30, 120, 'rgb(0, 64, 64)', 'black', 4),
-            new FilledRectangleControl(0, 360, 30, 120, 'rgb(255, 255, 255)', 'black', 4),
-            new FilledRectangleControl(30, 360, 30, 120, 'rgb(192, 192, 192)', 'black', 4),
-            new FilledRectangleControl(60, 360, 30, 120, 'rgb(255, 255, 0)', 'black', 4),
-            new FilledRectangleControl(90, 360, 30, 120, 'rgb(255, 0, 255)', 'black', 4),
-            new FilledRectangleControl(120, 360, 30, 120, 'rgb(0, 255, 255)', 'black', 4),
-            new FilledRectangleControl(150, 360, 30, 120, 'rgb(128, 128, 64)', 'black', 4),
-            new FilledRectangleControl(180, 360, 30, 120, 'rgb(0, 0, 0)', 'black', 4)
+            new FilledRectangleControl(0, 0, 30, 120, 'rgb(0, 128, 255)', 'gray', 4),
+            new FilledRectangleControl(30, 0, 30, 120, 'rgb(0, 128, 192)', 'gray', 4),
+            new FilledRectangleControl(60, 0, 30, 120, 'rgb(0, 64, 128)', 'gray', 4),
+            new FilledRectangleControl(90, 0, 30, 120, 'rgb(0, 0, 255)', 'gray', 4),
+            new FilledRectangleControl(120, 0, 30, 120, 'rgb(0, 0, 160)', 'gray', 4),
+            new FilledRectangleControl(150, 0, 30, 120, 'rgb(0, 0, 128)', 'gray', 4),
+            new FilledRectangleControl(180, 0, 30, 120, 'rgb(0, 0, 64)', 'gray', 4),
+            new FilledRectangleControl(0, 120, 30, 120, 'rgb(255, 128, 128)', 'gray', 4),
+            new FilledRectangleControl(30, 120, 30, 120, 'rgb(255, 0, 0)', 'gray', 4),
+            new FilledRectangleControl(60, 120, 30, 120, 'rgb(255, 128, 64)', 'gray', 4),
+            new FilledRectangleControl(90, 120, 30, 120, 'rgb(255, 128, 0)', 'gray', 4),
+            new FilledRectangleControl(120, 120, 30, 120, 'rgb(128, 64, 0)', 'gray', 4),
+            new FilledRectangleControl(150, 120, 30, 120, 'rgb(128, 0, 0)', 'gray', 4),
+            new FilledRectangleControl(180, 120, 30, 120, 'rgb(64, 0, 0)', 'gray', 4),
+            new FilledRectangleControl(0, 240, 30, 120, 'rgb(0, 255, 128)', 'gray', 4),
+            new FilledRectangleControl(30, 240, 30, 120, 'rgb(0, 255, 64)', 'gray', 4),
+            new FilledRectangleControl(60, 240, 30, 120, 'rgb(128, 255, 0)', 'gray', 4),
+            new FilledRectangleControl(90, 240, 30, 120, 'rgb(0, 255, 0)', 'gray', 4),
+            new FilledRectangleControl(120, 240, 30, 120, 'rgb(0, 128, 0)', 'gray', 4),
+            new FilledRectangleControl(150, 240, 30, 120, 'rgb(0, 64, 0)', 'gray', 4),
+            new FilledRectangleControl(180, 240, 30, 120, 'rgb(0, 64, 64)', 'gray', 4),
+            new FilledRectangleControl(0, 360, 30, 120, 'rgb(255, 255, 255)', 'gray', 4),
+            new FilledRectangleControl(30, 360, 30, 120, 'rgb(192, 192, 192)', 'gray', 4),
+            new FilledRectangleControl(60, 360, 30, 120, 'rgb(255, 255, 0)', 'gray', 4),
+            new FilledRectangleControl(90, 360, 30, 120, 'rgb(255, 0, 255)', 'gray', 4),
+            new FilledRectangleControl(120, 360, 30, 120, 'rgb(0, 255, 255)', 'gray', 4),
+            new FilledRectangleControl(150, 360, 30, 120, 'rgb(128, 128, 64)', 'gray', 4),
+            new FilledRectangleControl(180, 360, 30, 120, 'rgb(0, 0, 0)', 'gray', 4)
             ];
 
         toolBoxLayer.on('click', function(e) {
@@ -194,9 +208,9 @@
             colorBoxLayer.add(new Kinetic.Rect(item));
         });
 
-        toolBoxLayer.add(circle);
-        toolBoxLayer.add(square);
-        drawLayer.add(emptyRectangle);
+        //toolBoxLayer.add(circle);
+        //toolBoxLayer.add(square);
+        //drawLayer.add(emptyRectangle);
         
         //colorBoxLayer.add(color);
         colorBox.add(colorBoxLayer);
