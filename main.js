@@ -27,7 +27,7 @@
             selectedColor,
             currentlyDrawnShape,
             drawnShapeBeginX,
-            drawnShapeBeginY;;
+            drawnShapeBeginY;
         /*moved [stage].add on bottom,
         so everything is displayed correctly*/
     
@@ -36,7 +36,8 @@
         Kineticjs objects, but later lines and figures could be added perhaps.
         It is supposed to make drawing of the menu and drawing stuff on the stage
         easier.
-        Maybe all classes shoud have drawTo method?*/
+        Maybe all classes shoud have drawTo method?
+        Generally, it's a sad story, but we have to go through it*/
         var Control = (function () {
           function Control(x, y, stroke, strokeWidth) {
             this.x = x;
@@ -58,7 +59,7 @@
           }
     
           return RectangleControl;
-        }(Control))
+        }(Control));
     
         var FilledRectangleControl = (function (parent) {
           FilledRectangleControl.prototype = RectangleControl.prototype;
@@ -121,7 +122,7 @@
         stage.on('mousedown', function() {
             var mousePos = stage.getPointerPosition();
             
-            drawnShapeBeginX = mousePos.x,
+            drawnShapeBeginX = mousePos.x;
             drawnShapeBeginY = mousePos.y;
             
             switch (selectedTool.className.toLowerCase()) {
