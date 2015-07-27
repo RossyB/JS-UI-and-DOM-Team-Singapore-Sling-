@@ -162,7 +162,6 @@
 
         toolBoxLayer.on('click', function(e) {
             selectTool(e.target);
-            console.log(selectedTool);
         });
         
         stage.on('mousedown', function() {
