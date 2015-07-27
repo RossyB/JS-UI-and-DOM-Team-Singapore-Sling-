@@ -162,12 +162,11 @@
 
         toolBoxLayer.on('click', function(e) {
             selectTool(e.target);
-    
+            console.log(selectedTool);
         });
         
         stage.on('mousedown', function() {
             var mousePos = stage.getPointerPosition();
-            
             drawnShapeBeginX = mousePos.x;
             drawnShapeBeginY = mousePos.y;
             
@@ -178,7 +177,6 @@
                 case 'rect':
 
                     currentlyDrawnShape = new FilledRectangleControl(drawnShapeBeginX, drawnShapeBeginY, 0, 0, 'white', 'black', 1);
-
                     break;
     
             }
@@ -195,8 +193,8 @@
                     currentlyDrawnShape = new Kinetic.Circle(currentlyDrawnShape);
                     break;
                 case 'rect':
-                    currentlyDrawnShape.width = Math.abs(currentX - currentlyDrawnShape.x);
-                    currentlyDrawnShape.height = Math.abs(currentY - currentlyDrawnShape.y);
+                    currentlyDrawnShape.width = currentX - currentlyDrawnShape.x;
+                    currentlyDrawnShape.height = currentY - currentlyDrawnShape.y;
                     currentlyDrawnShape = new Kinetic.Rect(currentlyDrawnShape);
                     break;
             }
@@ -210,7 +208,7 @@
 
         //toolBoxLayer.add(circle);
         //toolBoxLayer.add(square);
-        //drawLayer.add(emptyRectangle);
+        drawLayer.add(emptyRectangle); // DO NOT REMOVE KinectJS requires somethings drawn on the layer enable drawing on it.
         
         //colorBoxLayer.add(color);
         colorBox.add(colorBoxLayer);
