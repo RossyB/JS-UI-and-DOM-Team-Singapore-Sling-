@@ -113,40 +113,38 @@
         var emptyRectangle = new Kinetic.Rect(new FilledRectangleControl(0, 0, stage.getWidth(), stage.getHeight(), 0, 0, 0));
         var circle = new Kinetic.Circle(new CircleControl(30, 30, 30, 'white', 'black', 1));
         var image = new ImageControl(30, 30, 200, 200, 'https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcTBWymOLW11o8_b8vm5kPzFTvd4I5HrS-vcHcZKlRBrlTSRvxDd7tJs_ucK', 'black', 4);
-        
-        //Palette
-        var pickBlue1 = new FilledRectangleControl(0, 0, 30, 120, 'rgb(0, 128, 255)', 'black', 4),
-            pickBlue2 = new FilledRectangleControl(30, 0, 30, 120, 'rgb(0, 128, 192)', 'black', 4),
-            pickBlue3 = new FilledRectangleControl(60, 0, 30, 120, 'rgb(0, 64, 128)', 'black', 4),
-            pickBlue4 = new FilledRectangleControl(90, 0, 30, 120, 'rgb(0, 0, 255)', 'black', 4),
-            pickBlue5 = new FilledRectangleControl(120, 0, 30, 120, 'rgb(0, 0, 160)', 'black', 4),
-            pickBlue6 = new FilledRectangleControl(150, 0, 30, 120, 'rgb(0, 0, 128)', 'black', 4),
-            pickBlue7 = new FilledRectangleControl(180, 0, 30, 120, 'rgb(0, 0, 64)', 'black', 4),
-            pickRed1 = new FilledRectangleControl(0, 120, 30, 120, 'rgb(255, 128, 128)', 'black', 4),
-            pickRed2 = new FilledRectangleControl(30, 120, 30, 120, 'rgb(255, 0, 0)', 'black', 4),
-            pickRed3 = new FilledRectangleControl(60, 120, 30, 120, 'rgb(255, 128, 64)', 'black', 4),
-            pickRed4 = new FilledRectangleControl(90, 120, 30, 120, 'rgb(255, 128, 0)', 'black', 4),
-            pickRed5 = new FilledRectangleControl(120, 120, 30, 120, 'rgb(128, 64, 0)', 'black', 4),
-            pickRed6 = new FilledRectangleControl(150, 120, 30, 120, 'rgb(128, 0, 0)', 'black', 4),
-            pickRed7 = new FilledRectangleControl(180, 120, 30, 120, 'rgb(64, 0, 0)', 'black', 4),
-            pickGreen1 = new FilledRectangleControl(0, 240, 30, 120, 'rgb(0, 255, 128)', 'black', 4),
-            pickGreen2 = new FilledRectangleControl(30, 240, 30, 120, 'rgb(0, 255, 64)', 'black', 4),
-            pickGreen3 = new FilledRectangleControl(60, 240, 30, 120, 'rgb(128, 255, 0)', 'black', 4),
-            pickGreen4 = new FilledRectangleControl(90, 240, 30, 120, 'rgb(0, 255, 0)', 'black', 4),
-            pickGreen5 = new FilledRectangleControl(120, 240, 30, 120, 'rgb(0, 128, 0)', 'black', 4),
-            pickGreen6 = new FilledRectangleControl(150, 240, 30, 120, 'rgb(0, 64, 0)', 'black', 4),
-            pickGreen7 = new FilledRectangleControl(180, 240, 30, 120, 'rgb(0, 64, 64)', 'black', 4),
-            pickGray1 = new FilledRectangleControl(0, 360, 30, 120, 'rgb(255, 255, 255)', 'black', 4),
-            pickGray2 = new FilledRectangleControl(30, 360, 30, 120, 'rgb(192, 192, 192)', 'black', 4),
-            pickGray3 = new FilledRectangleControl(60, 360, 30, 120, 'rgb(255, 255, 0)', 'black', 4),
-            pickGray4 = new FilledRectangleControl(90, 360, 30, 120, 'rgb(255, 0, 255)', 'black', 4),
-            pickGray5 = new FilledRectangleControl(120, 360, 30, 120, 'rgb(0, 255, 255)', 'black', 4),
-            pickGray6 = new FilledRectangleControl(150, 360, 30, 120, 'rgb(128, 128, 64)', 'black', 4),
-            pickGray7 = new FilledRectangleControl(180, 360, 30, 120, 'rgb(0, 0, 0)', 'black', 4);
 
+        var palette = [
+            new FilledRectangleControl(0, 0, 30, 120, 'rgb(0, 128, 255)', 'black', 4),
+            new FilledRectangleControl(30, 0, 30, 120, 'rgb(0, 128, 192)', 'black', 4),
+            new FilledRectangleControl(60, 0, 30, 120, 'rgb(0, 64, 128)', 'black', 4),
+            new FilledRectangleControl(90, 0, 30, 120, 'rgb(0, 0, 255)', 'black', 4),
+            new FilledRectangleControl(120, 0, 30, 120, 'rgb(0, 0, 160)', 'black', 4),
+            new FilledRectangleControl(150, 0, 30, 120, 'rgb(0, 0, 128)', 'black', 4),
+            new FilledRectangleControl(180, 0, 30, 120, 'rgb(0, 0, 64)', 'black', 4),
+            new FilledRectangleControl(0, 120, 30, 120, 'rgb(255, 128, 128)', 'black', 4),
+            new FilledRectangleControl(30, 120, 30, 120, 'rgb(255, 0, 0)', 'black', 4),
+            new FilledRectangleControl(60, 120, 30, 120, 'rgb(255, 128, 64)', 'black', 4),
+            new FilledRectangleControl(90, 120, 30, 120, 'rgb(255, 128, 0)', 'black', 4),
+            new FilledRectangleControl(120, 120, 30, 120, 'rgb(128, 64, 0)', 'black', 4),
+            new FilledRectangleControl(150, 120, 30, 120, 'rgb(128, 0, 0)', 'black', 4),
+            new FilledRectangleControl(180, 120, 30, 120, 'rgb(64, 0, 0)', 'black', 4),
+            new FilledRectangleControl(0, 240, 30, 120, 'rgb(0, 255, 128)', 'black', 4),
+            new FilledRectangleControl(30, 240, 30, 120, 'rgb(0, 255, 64)', 'black', 4),
+            new FilledRectangleControl(60, 240, 30, 120, 'rgb(128, 255, 0)', 'black', 4),
+            new FilledRectangleControl(90, 240, 30, 120, 'rgb(0, 255, 0)', 'black', 4),
+            new FilledRectangleControl(120, 240, 30, 120, 'rgb(0, 128, 0)', 'black', 4),
+            new FilledRectangleControl(150, 240, 30, 120, 'rgb(0, 64, 0)', 'black', 4),
+            new FilledRectangleControl(180, 240, 30, 120, 'rgb(0, 64, 64)', 'black', 4),
+            new FilledRectangleControl(0, 360, 30, 120, 'rgb(255, 255, 255)', 'black', 4),
+            new FilledRectangleControl(30, 360, 30, 120, 'rgb(192, 192, 192)', 'black', 4),
+            new FilledRectangleControl(60, 360, 30, 120, 'rgb(255, 255, 0)', 'black', 4),
+            new FilledRectangleControl(90, 360, 30, 120, 'rgb(255, 0, 255)', 'black', 4),
+            new FilledRectangleControl(120, 360, 30, 120, 'rgb(0, 255, 255)', 'black', 4),
+            new FilledRectangleControl(150, 360, 30, 120, 'rgb(128, 128, 64)', 'black', 4),
+            new FilledRectangleControl(180, 360, 30, 120, 'rgb(0, 0, 0)', 'black', 4)
+            ];
 
-            ;
-        
         toolBoxLayer.on('click', function(e) {
             selectTool(e.target);
     
@@ -180,35 +178,10 @@
             
             drawLayer.add(currentlyDrawnShape);
         });
-        
-        colorBoxLayer.add(new Kinetic.Rect(pickBlue1));
-        colorBoxLayer.add(new Kinetic.Rect(pickBlue2));
-        colorBoxLayer.add(new Kinetic.Rect(pickBlue3));
-        colorBoxLayer.add(new Kinetic.Rect(pickBlue4));
-        colorBoxLayer.add(new Kinetic.Rect(pickBlue5));
-        colorBoxLayer.add(new Kinetic.Rect(pickBlue6));
-        colorBoxLayer.add(new Kinetic.Rect(pickBlue7));
-        colorBoxLayer.add(new Kinetic.Rect(pickRed1));
-        colorBoxLayer.add(new Kinetic.Rect(pickRed2));
-        colorBoxLayer.add(new Kinetic.Rect(pickRed3));
-        colorBoxLayer.add(new Kinetic.Rect(pickRed4));
-        colorBoxLayer.add(new Kinetic.Rect(pickRed5));
-        colorBoxLayer.add(new Kinetic.Rect(pickRed6));
-        colorBoxLayer.add(new Kinetic.Rect(pickRed7));
-        colorBoxLayer.add(new Kinetic.Rect(pickGreen1));
-        colorBoxLayer.add(new Kinetic.Rect(pickGreen2));
-        colorBoxLayer.add(new Kinetic.Rect(pickGreen3));
-        colorBoxLayer.add(new Kinetic.Rect(pickGreen4));
-        colorBoxLayer.add(new Kinetic.Rect(pickGreen5));
-        colorBoxLayer.add(new Kinetic.Rect(pickGreen6));
-        colorBoxLayer.add(new Kinetic.Rect(pickGreen7));
-        colorBoxLayer.add(new Kinetic.Rect(pickGray1));
-        colorBoxLayer.add(new Kinetic.Rect(pickGray2));
-        colorBoxLayer.add(new Kinetic.Rect(pickGray3));
-        colorBoxLayer.add(new Kinetic.Rect(pickGray4));
-        colorBoxLayer.add(new Kinetic.Rect(pickGray5));
-        colorBoxLayer.add(new Kinetic.Rect(pickGray6));
-        colorBoxLayer.add(new Kinetic.Rect(pickGray7));
+
+        palette.forEach(function(item) {
+            colorBoxLayer.add(new Kinetic.Rect(item));
+        });
 
         toolBoxLayer.add(circle);
         drawLayer.add(emptyRectangle);
