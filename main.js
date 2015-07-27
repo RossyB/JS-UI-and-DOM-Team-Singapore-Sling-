@@ -109,10 +109,17 @@
         function selectTool(tool) {
             selectedTool = tool;
         }
+
         var emptyRectangle = new Kinetic.Rect(new FilledRectangleControl(0, 0, stage.getWidth(), stage.getHeight(), 0, 0, 0));
         var circle = new Kinetic.Circle(new CircleControl(30, 30, 30, 'white', 'black', 1));
         var image = new ImageControl(30, 30, 200, 200, 'https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcTBWymOLW11o8_b8vm5kPzFTvd4I5HrS-vcHcZKlRBrlTSRvxDd7tJs_ucK', 'black', 4);
-        var rec = new FilledRectangleControl(0, 0, 30, 110, 'rgb(5, 123, 231)', 'black', 4);
+        //Palette
+        var pick_blue = new FilledRectangleControl(0, 0, 30, 110, 'rgb(5, 123, 231)', 'black', 4),
+            pick_red = new FilledRectangleControl(30, 0, 30, 110, 'rgb(255, 12, 35)', 'black', 4),
+            pick_green = new FilledRectangleControl(60, 0, 30, 110, 'rgb(10, 255, 25)', 'black', 4),
+            pick_yellow = new FilledRectangleControl(90, 0, 30, 110, 'rgb(255, 255, 25)', 'black', 4),
+            pick_orange = new FilledRectangleControl(120, 0, 30, 110, 'rgb(255, 125, 25)', 'black', 4),
+            pick_pink = new FilledRectangleControl(150, 0, 30, 110, 'rgb(255, 25, 125)', 'black', 4);
         
         toolBoxLayer.on('click', function(e) {
             selectTool(e.target);
@@ -148,7 +155,12 @@
             drawLayer.add(currentlyDrawnShape);
         });
         
-        colorBoxLayer.add(new Kinetic.Rect(rec));
+        colorBoxLayer.add(new Kinetic.Rect(pick_blue));
+        colorBoxLayer.add(new Kinetic.Rect(pick_red));
+        colorBoxLayer.add(new Kinetic.Rect(pick_green));
+        colorBoxLayer.add(new Kinetic.Rect(pick_yellow));
+        colorBoxLayer.add(new Kinetic.Rect(pick_orange));
+        colorBoxLayer.add(new Kinetic.Rect(pick_pink));
         toolBoxLayer.add(circle);
         drawLayer.add(emptyRectangle);
         
