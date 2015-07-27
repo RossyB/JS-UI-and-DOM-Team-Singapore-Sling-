@@ -112,6 +112,7 @@
 
         var emptyRectangle = new Kinetic.Rect(new FilledRectangleControl(0, 0, stage.getWidth(), stage.getHeight(), 0, 0, 0));
         var circle = new Kinetic.Circle(new CircleControl(30, 30, 30, 'white', 'black', 1));
+        var square = new Kinetic.Rect(new FilledRectangleControl(5, 80, 60, 60, 'white', 'black', 1));
         var image = new ImageControl(30, 30, 200, 200, 'https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcTBWymOLW11o8_b8vm5kPzFTvd4I5HrS-vcHcZKlRBrlTSRvxDd7tJs_ucK', 'black', 4);
         
         //Palette
@@ -162,6 +163,11 @@
                 case 'circle':
                     currentlyDrawnShape = new CircleControl(drawnShapeBeginX, drawnShapeBeginY, 0, 'white', 'black', 1);
                     break;
+                case 'rect':
+
+                    currentlyDrawnShape = new FilledRectangleControl(drawnShapeBeginX, drawnShapeBeginY, 0, 0, 'white', 'black', 1);
+
+                    break;
     
             }
         });
@@ -175,6 +181,11 @@
                 case 'circle':
                     currentlyDrawnShape.radius = Math.sqrt( Math.pow( (currentlyDrawnShape.x - currentX) , 2) + Math.pow( (currentlyDrawnShape.y - currentY), 2) );
                     currentlyDrawnShape = new Kinetic.Circle(currentlyDrawnShape);
+                    break;
+                case 'rect':
+                    currentlyDrawnShape.width = Math.abs(currentX - currentlyDrawnShape.x);
+                    currentlyDrawnShape.height = Math.abs(currentY - currentlyDrawnShape.y);
+                    currentlyDrawnShape = new Kinetic.Rect(currentlyDrawnShape);
                     break;
             }
             
@@ -211,6 +222,7 @@
         colorBoxLayer.add(new Kinetic.Rect(pickGray7));
 
         toolBoxLayer.add(circle);
+        toolBoxLayer.add(square);
         drawLayer.add(emptyRectangle);
         
         //colorBoxLayer.add(color);
