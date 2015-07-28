@@ -25,7 +25,7 @@
             toolBoxLayer = new Kinetic.Layer(),
             colorBoxLayer = new Kinetic.Layer(),
             selectedTool,
-            selectedColor,
+            selectedColor = 'rgb(128, 255, 255)',
             currentlyDrawnShape,
             drawnShapeBeginX,
             drawnShapeBeginY;
@@ -122,8 +122,8 @@
         drawCircleToolBox(toolBox, toolBoxLayer, 135, 45);
         drawTriangleToolBox(toolBox, toolBoxLayer, 15, 105);
         drawText(toolBox, toolBoxLayer, 15, 175, 'Stroke and fill');
-        drawRectToolBox(toolBox, toolBoxLayer, 15, 210, null, 'blue')
-        drawRectToolBox(toolBox, toolBoxLayer, 75, 210, 'blue')
+        drawRectToolBox(toolBox, toolBoxLayer, 15, 210, null, 'blue');
+        drawRectToolBox(toolBox, toolBoxLayer, 75, 210, 'blue');
         drawLineToolBox(toolBox, toolBoxLayer, 135, 210, 2);
         drawLineToolBox(toolBox, toolBoxLayer, 15, 270, 4);
         drawLineToolBox(toolBox, toolBoxLayer, 75, 270, 8);
@@ -157,11 +157,16 @@
             new FilledRectangleControl(90, 360, 30, 120, 'rgb(255, 0, 255)', 'gray', 4),
             new FilledRectangleControl(120, 360, 30, 120, 'rgb(0, 255, 255)', 'gray', 4),
             new FilledRectangleControl(150, 360, 30, 120, 'rgb(128, 128, 64)', 'gray', 4),
-            new FilledRectangleControl(180, 360, 30, 120, 'rgb(0, 0, 0)', 'gray', 4)
+            new FilledRectangleControl(180, 360, 30, 120, 'rgb(0, 0, 0)', 'gray', 4),
             ];
 
         toolBoxLayer.on('click', function(e) {
             selectTool(e.target);
+        });
+
+        colorBoxLayer.on('click', function(e) {
+            selectedColor = e.target.fill();
+            //alert(selectedColor);
         });
         
         stage.on('mousedown', function() {
@@ -208,7 +213,7 @@
         //toolBoxLayer.add(circle);
         //toolBoxLayer.add(square);
         drawLayer.add(emptyRectangle); // DO NOT REMOVE KinectJS requires somethings drawn on the layer enable drawing on it.
-        
+
         //colorBoxLayer.add(color);
         colorBox.add(colorBoxLayer);
         stage.add(drawLayer);
@@ -216,7 +221,6 @@
         
         function frame() {
             drawLayer.drawScene();
-            
             setTimeout(frame, 100);        
         }
         
