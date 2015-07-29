@@ -158,7 +158,7 @@
 
         colorBoxLayer.on('click', function (e) {
             selectedColor = e.target.fill();
-            //alert(selectedColor);
+
         });
 
         stage.on('mousedown', function () {
@@ -168,15 +168,15 @@
 
             switch (selectedTool.className.toLowerCase()) {
                 case 'circle':
-                    currentlyDrawnShape = new CircleControl(drawnShapeBeginX, drawnShapeBeginY, 0, 'white', 'black', 1);
+                    currentlyDrawnShape = new CircleControl(drawnShapeBeginX, drawnShapeBeginY, 0, 'white',selectedColor || 'black', 1);
                     break;
                 case 'rect':
 
-                    currentlyDrawnShape = new FilledRectangleControl(drawnShapeBeginX, drawnShapeBeginY, 0, 0, 'white', 'black', 1);
+                    currentlyDrawnShape = new FilledRectangleControl(drawnShapeBeginX, drawnShapeBeginY, 0, 0, 'white', selectedColor || 'black', 1);
 
                     break;
                 case 'line':
-                    currentlyDrawnShape = new LineControl(drawnShapeBeginX, drawnShapeBeginY,[0,0], 'black', 1);
+                    currentlyDrawnShape = new LineControl(drawnShapeBeginX, drawnShapeBeginY,[0,0],  'black', 1);
 
                     break;
             }
@@ -209,7 +209,7 @@
                 case 'line':
                     currentlyDrawnShape = new Kinetic.Line({
                         points: [drawnShapeBeginX, drawnShapeBeginY, currentX,currentY],
-                        stroke: 'black',
+                        stroke: selectedColor ,
                         strokeWidth: 1
                     });
                     break;
