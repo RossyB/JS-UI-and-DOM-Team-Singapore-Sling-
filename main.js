@@ -26,6 +26,7 @@
             colorBoxLayer = new Kinetic.Layer(),
             selectedTool,
             selectedColor = 'rgb(128, 255, 255)',
+            selectedFillColor,
             currentlyDrawnShape,
             drawnShapeBeginX,
             drawnShapeBeginY;
@@ -153,7 +154,6 @@
 
         toolBoxLayer.on('click', function (e) {
             selectTool(e.target);
-            console.log(selectedTool);
         });
 
         colorBoxLayer.on('click', function (e) {
@@ -165,23 +165,19 @@
             var mousePos = stage.getPointerPosition();
             drawnShapeBeginX = mousePos.x;
             drawnShapeBeginY = mousePos.y;
-
+            
             switch (selectedTool.className.toLowerCase()) {
                 case 'circle':
-                    currentlyDrawnShape = new CircleControl(drawnShapeBeginX, drawnShapeBeginY, 0, 'white',selectedColor || 'black', 1);
+                    currentlyDrawnShape = new CircleControl(drawnShapeBeginX, drawnShapeBeginY, 0, selectedFillColor || 'transparent',selectedColor || 'black', 1);
                     break;
                 case 'rect':
-
-                    currentlyDrawnShape = new FilledRectangleControl(drawnShapeBeginX, drawnShapeBeginY, 0, 0, 'white', selectedColor || 'black', 1);
-
+                    currentlyDrawnShape = new FilledRectangleControl(drawnShapeBeginX, drawnShapeBeginY, 0, 0, selectedFillColor || 'transparent', selectedColor || 'black', 1);
                     break;
                 case 'line':
-                    currentlyDrawnShape = new LineControl(drawnShapeBeginX, drawnShapeBeginY,[0,0],  'black', 1);
-
+                    currentlyDrawnShape = new LineControl(drawnShapeBeginX, drawnShapeBeginY,[0,0], selectedFillColor || 'transparent', 1);
                     break;
             }
         });
-
 
         stage.on('mouseup', function () {
             var mousePos = stage.getPointerPosition(),
