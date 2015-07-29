@@ -41,24 +41,6 @@ var toolBoxDrawer = (function(){
     
     var createToolBox = (function(){
         
-        function setFillStyle(fillStyle) {
-            this.attrs.fill = fillStyle;
-        
-            return this;
-        }
-        
-        function setStrokeStyle(strokeStyle) {
-            this.attrs.stroke = strokeStyle;
-            
-            return this;
-        }
-        
-        function setStrokeWidth(strokeWidth) {
-            this.attrs.strokeWidth = strokeWidth;
-            
-            return this;
-        }
-        
         function createToolBox(x, y, shape, id) {
             var outline;
             if (shape === defaultLine) {
