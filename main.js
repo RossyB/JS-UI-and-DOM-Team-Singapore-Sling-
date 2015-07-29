@@ -28,7 +28,7 @@
             selectedTool,
             selectedWidth,
             fillColor,
-            selectedColor = 'rgb(128, 255, 255)',
+            selectedColor = 'black',
             currentlyDrawnShape,
             drawnShapeBeginX,
             drawnShapeBeginY;
@@ -124,6 +124,7 @@
 
         function selectTool(tool) {
             selectedTool = tool;
+            console.log(selectedTool.shapeId);
         }
 
         var emptyRectangle = new Kinetic.Rect(new FilledRectangleControl(0, 0, stage.getWidth(), stage.getHeight(), 0, 0, 0));
@@ -205,12 +206,12 @@
                     selectedWidth = 8;
                     break;
 
-                case 'fill':
+                case 'filledRect':
                     fillColor = selectedColor;
                     break;
 
-                case 'stroke':
-                    fillColor = 'white';
+                case 'strokedRect':
+                    fillColor = 'transparent';
                     break;
             }
         });
