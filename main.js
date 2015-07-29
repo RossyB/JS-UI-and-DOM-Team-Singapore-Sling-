@@ -2,25 +2,25 @@
 /// <reference path="D:\New courses\9 JavaScript UI and DOM\TeamworkPaintDotBg\TeamworkPaintDotBg\controls.js" />
 
 (function () {
-    window.onload = function() {
+    window.onload = function () {
         var stage = new Kinetic.Stage({
             container: 'canvas-container',
             width: (window.innerWidth / 100) * 50,
             height: 500
         });
-    
+
         var toolBox = new Kinetic.Stage({
             container: 'toolbox',
             width: (window.innerWidth / 100) * 15,
             height: 500
         });
-    
+
         var colorBox = new Kinetic.Stage({
             container: 'colorbox',
             width: (window.innerWidth / 100) * 15,
             height: 500
         });
-    
+
         var drawLayer = new Kinetic.Layer(),
             toolBoxLayer = new Kinetic.Layer(),
             colorBoxLayer = new Kinetic.Layer(),
@@ -30,83 +30,95 @@
             drawnShapeBeginX,
             drawnShapeBeginY;
         /*moved [stage].add on bottom,
-        so everything is displayed correctly*/
-    
+         so everything is displayed correctly*/
+
         /*Not sure if i'm on the right path. // OF COURSE YOU FUCKING ARENT RADO
-        This oop probably doesn't help much with the already given
-        Kineticjs objects, but later lines and figures could be added perhaps.
-        It is supposed to make drawing of the menu and drawing stuff on the stage
-        easier.
-        Maybe all classes shoud have drawTo method?
-        Generally, it's a sad story, but we have to go through it*/
+         This oop probably doesn't help much with the already given
+         Kineticjs objects, but later lines and figures could be added perhaps.
+         It is supposed to make drawing of the menu and drawing stuff on the stage
+         easier.
+         Maybe all classes shoud have drawTo method?
+         Generally, it's a sad story, but we have to go through it*/
         var Control = (function () {
-          function Control(x, y, stroke, strokeWidth) {
-            this.x = x;
-            this.y = y;
-            this.stroke = stroke;
-            this.strokeWidth = strokeWidth;
-          }
-    
-          return Control;
-        }());
-    
-        var RectangleControl = (function(parent) {
-          RectangleControl.prototype = parent.prototype;
-          
-          function RectangleControl(x, y, width, height, stroke, strokeWidth) {
-            parent.call(this, x, y, stroke, strokeWidth);
-            this.width = width;
-            this.height = height;
-          }
-    
-          return RectangleControl;
-        }(Control));
-    
-        var FilledRectangleControl = (function (parent) {
-          FilledRectangleControl.prototype = RectangleControl.prototype;
-          
-          function FilledRectangleControl(x, y, width, height, fill, stroke, strokeWidth) {
-            parent.call(this, x, y, width, height, stroke, strokeWidth);
-            this.fill = fill;
-          }
-    
-          return FilledRectangleControl;
-        }(RectangleControl));
-    
-        var ImageControl = (function (parent) {
-          var image;
-          ImageControl.prototype = parent.prototype;
-          
-          function ImageControl(x, y, width, height, imageSrc, stroke, strokeWidth) {
-            parent.call(this, x, y, width, height, stroke, strokeWidth);
-            this.imageSrc = imageSrc;
-            this.image = new Image(width, height);
-            this.image.src = imageSrc;
-          }
-    
-          ImageControl.prototype.drawTo = function (stage, layer) {
-            var self = this;
-            self.image.onload = function () {
-              layer.add(new Kinetic.Image(self));
-              stage.add(layer);
+            function Control(x, y, stroke, strokeWidth) {
+                this.x = x;
+                this.y = y;
+                this.stroke = stroke;
+                this.strokeWidth = strokeWidth;
             }
-          }
-    
-          return ImageControl;
-        }(RectangleControl));
-    
-        var CircleControl = (function (parent) {
-          CircleControl.prototype = Control.prototype;
-          
-          function CircleControl (x, y, radius, fill, stroke, strokeWidth) {
-            parent.call(this, x, y, stroke, strokeWidth);
-            this.fill = fill;
-            this.radius = radius;
-          };
-    
-          return CircleControl;
+
+            return Control;
+        }());
+
+        var RectangleControl = (function (parent) {
+            RectangleControl.prototype = parent.prototype;
+
+            function RectangleControl(x, y, width, height, stroke, strokeWidth) {
+                parent.call(this, x, y, stroke, strokeWidth);
+                this.width = width;
+                this.height = height;
+            }
+
+            return RectangleControl;
         }(Control));
-        
+
+        var LineControl = (function (parent) {
+            LineControl.prototype = parent.prototype;
+
+            function LineControl(x, y, points, stroke, strokeWidth) {
+                parent.call(this, x, y, stroke, strokeWidth);
+                this.points = [];
+
+            }
+
+            return LineControl;
+        }(Control));
+
+        var FilledRectangleControl = (function (parent) {
+            FilledRectangleControl.prototype = RectangleControl.prototype;
+
+            function FilledRectangleControl(x, y, width, height, fill, stroke, strokeWidth) {
+                parent.call(this, x, y, width, height, stroke, strokeWidth);
+                this.fill = fill;
+            }
+
+            return FilledRectangleControl;
+        }(RectangleControl));
+
+        var ImageControl = (function (parent) {
+            var image;
+            ImageControl.prototype = parent.prototype;
+
+            function ImageControl(x, y, width, height, imageSrc, stroke, strokeWidth) {
+                parent.call(this, x, y, width, height, stroke, strokeWidth);
+                this.imageSrc = imageSrc;
+                this.image = new Image(width, height);
+                this.image.src = imageSrc;
+            }
+
+            ImageControl.prototype.drawTo = function (stage, layer) {
+                var self = this;
+                self.image.onload = function () {
+                    layer.add(new Kinetic.Image(self));
+                    stage.add(layer);
+                }
+            }
+
+            return ImageControl;
+        }(RectangleControl));
+
+        var CircleControl = (function (parent) {
+            CircleControl.prototype = Control.prototype;
+
+            function CircleControl(x, y, radius, fill, stroke, strokeWidth) {
+                parent.call(this, x, y, stroke, strokeWidth);
+                this.fill = fill;
+                this.radius = radius;
+            };
+
+            return CircleControl;
+        }(Control));
+
         function selectTool(tool) {
             selectedTool = tool;
         }
@@ -158,22 +170,23 @@
             new FilledRectangleControl(120, 360, 30, 120, 'rgb(0, 255, 255)', 'gray', 4),
             new FilledRectangleControl(150, 360, 30, 120, 'rgb(128, 128, 64)', 'gray', 4),
             new FilledRectangleControl(180, 360, 30, 120, 'rgb(0, 0, 0)', 'gray', 4),
-            ];
+        ];
 
-        toolBoxLayer.on('click', function(e) {
+        toolBoxLayer.on('click', function (e) {
             selectTool(e.target);
+            console.log(selectedTool);
         });
 
-        colorBoxLayer.on('click', function(e) {
+        colorBoxLayer.on('click', function (e) {
             selectedColor = e.target.fill();
             //alert(selectedColor);
         });
-        
-        stage.on('mousedown', function() {
+
+        stage.on('mousedown', function () {
             var mousePos = stage.getPointerPosition();
             drawnShapeBeginX = mousePos.x;
             drawnShapeBeginY = mousePos.y;
-            
+
             switch (selectedTool.className.toLowerCase()) {
                 case 'circle':
                     currentlyDrawnShape = new CircleControl(drawnShapeBeginX, drawnShapeBeginY, 0, 'white', 'black', 1);
@@ -181,19 +194,32 @@
                 case 'rect':
 
                     currentlyDrawnShape = new FilledRectangleControl(drawnShapeBeginX, drawnShapeBeginY, 0, 0, 'white', 'black', 1);
+
                     break;
-    
+                case 'line':
+                    currentlyDrawnShape = new LineControl(drawnShapeBeginX, drawnShapeBeginY,[0,0], 'black', 1);
+
+                    break;
             }
         });
-        
-        stage.on('mouseup', function() {
+
+
+        stage.on('mouseup', function () {
             var mousePos = stage.getPointerPosition(),
-            currentX = mousePos.x,
-            currentY = mousePos.y;
-            
-            switch(selectedTool.className.toLowerCase()) {
+                currentX = mousePos.x,
+                currentY = mousePos.y;
+
+            //var getPoints = function () {
+            //    var points = [];
+            //    points.push(currentX);
+            //    points.push(currentY);
+            //    return points;
+            //};
+
+
+            switch (selectedTool.className.toLowerCase()) {
                 case 'circle':
-                    currentlyDrawnShape.radius = Math.sqrt( Math.pow( (currentlyDrawnShape.x - currentX) , 2) + Math.pow( (currentlyDrawnShape.y - currentY), 2) );
+                    currentlyDrawnShape.radius = Math.sqrt(Math.pow((currentlyDrawnShape.x - currentX), 2) + Math.pow((currentlyDrawnShape.y - currentY), 2));
                     currentlyDrawnShape = new Kinetic.Circle(currentlyDrawnShape);
                     break;
                 case 'rect':
@@ -201,12 +227,19 @@
                     currentlyDrawnShape.height = currentY - currentlyDrawnShape.y;
                     currentlyDrawnShape = new Kinetic.Rect(currentlyDrawnShape);
                     break;
+                case 'line':
+                    currentlyDrawnShape = new Kinetic.Line({
+                        points: [drawnShapeBeginX, drawnShapeBeginY, currentX,currentY],
+                        stroke: 'black',
+                        strokeWidth: 1
+                    });
+                    break;
             }
-            
+
             drawLayer.add(currentlyDrawnShape);
         });
 
-        palette.forEach(function(item) {
+        palette.forEach(function (item) {
             colorBoxLayer.add(new Kinetic.Rect(item));
         });
 
@@ -218,12 +251,12 @@
         colorBox.add(colorBoxLayer);
         stage.add(drawLayer);
         toolBox.add(toolBoxLayer);
-        
+
         function frame() {
             drawLayer.drawScene();
-            setTimeout(frame, 100);        
+            setTimeout(frame, 100);
         }
-        
+
         frame();
     }
 }());
