@@ -1,7 +1,7 @@
 ﻿/// <reference path="D:\New courses\9 JavaScript UI and DOM\TeamworkPaintDotBg\TeamworkPaintDotBg\libs/kinetic-v5.1.0.js" />
 
 function drawText(stage, layer, x, y, text) {
-    var text = new Kinetic.Text({
+    text = new Kinetic.Text({
         x: x,
         y: y,
         text: text,
@@ -13,7 +13,7 @@ function drawText(stage, layer, x, y, text) {
     stage.add(layer);
 }
 
-function drawLineToolBox(stage, layer, x, y, strokeWidth) {
+function drawLineToolBox(stage, layer, x, y, strokeWidth, id) {
     var rect = new Kinetic.Rect({
         x: x,
         y: y,
@@ -21,13 +21,15 @@ function drawLineToolBox(stage, layer, x, y, strokeWidth) {
         height: 50,
         fill: 'buttonface',
         stroke: 'gray',
-        strokeWidth: 2
+        strokeWidth: 2,
+        id: id
     });
 
     var line = new Kinetic.Line({
         points: [x + 10, y + 25, x + 40, y + 25],
         stroke: 'gray',
-        strokeWidth: strokeWidth || 2
+        strokeWidth: strokeWidth || 2,
+        id: id
     });
 
     layer.add(rect);
@@ -35,7 +37,7 @@ function drawLineToolBox(stage, layer, x, y, strokeWidth) {
     stage.add(layer);
 }
 
-function drawRectToolBox(stage, layer, x, y, fill, stroke) {
+function drawRectToolBox(stage, layer, x, y, fill, stroke, id) {
     var rect = new Kinetic.Rect({
         x: x,
         y: y,
@@ -43,7 +45,8 @@ function drawRectToolBox(stage, layer, x, y, fill, stroke) {
         height: 50,
         fill: 'buttonface',
         stroke: 'gray',
-        strokeWidth: 2
+        strokeWidth: 2,
+        id: id
     });
 
     var innerRect = new Kinetic.Rect({
@@ -53,7 +56,8 @@ function drawRectToolBox(stage, layer, x, y, fill, stroke) {
         height: 30,
         fill: fill || 'buttonface',
         stroke: stroke || 'gray',
-        strokeWidth: 2
+        strokeWidth: 2,
+        id: id
     });
 
     layer.add(rect);
@@ -61,7 +65,7 @@ function drawRectToolBox(stage, layer, x, y, fill, stroke) {
     stage.add(layer);
 }
 
-function drawCircleToolBox(stage, layer, x, y) {
+function drawCircleToolBox(stage, layer, x, y, id) {
     var rect = new Kinetic.Rect({
         x: x,
         y: y,
@@ -69,7 +73,8 @@ function drawCircleToolBox(stage, layer, x, y) {
         height: 50,
         fill: 'buttonface',
         stroke: 'gray',
-        strokeWidth: 2
+        strokeWidth: 2,
+        id: id
     });
 
     var circle = new Kinetic.Circle({
@@ -77,14 +82,16 @@ function drawCircleToolBox(stage, layer, x, y) {
         y: y + 25,
         radius: 16,
         stroke: 'gray',
-        strokeWidth: 2
-    })
+        strokeWidth: 2,
+        id: id
+    });
+
     layer.add(rect);
     layer.add(circle);
     stage.add(layer);
 }
 
-function drawTriangleToolBox(stage, layer, x, y) {
+function drawTriangleToolBox(stage, layer, x, y, id) {
     var rect = new Kinetic.Rect({
         x: x,
         y: y,
@@ -92,14 +99,16 @@ function drawTriangleToolBox(stage, layer, x, y) {
         height: 50,
         fill: 'buttonface',
         stroke: 'gray',
-        strokeWidth: 2
+        strokeWidth: 2,
+        id: id
     });
 
     var line = new Kinetic.Line({
         points: [x + 10, y + 40, x + 40, y + 40, x + 25, y + 10 ],
         stroke: 'gray',
         strokeWidth: 2,
-        closed: true
+        closed: true,
+        id: id
     });
 
     layer.add(rect);

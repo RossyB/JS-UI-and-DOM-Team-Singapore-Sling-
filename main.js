@@ -26,7 +26,6 @@
             colorBoxLayer = new Kinetic.Layer(),
             selectedTool,
             selectedColor = 'rgb(128, 255, 255)',
-            selectedFillColor,
             currentlyDrawnShape,
             drawnShapeBeginX,
             drawnShapeBeginY;
@@ -130,17 +129,16 @@
         var image = new ImageControl(30, 30, 200, 200, 'https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcTBWymOLW11o8_b8vm5kPzFTvd4I5HrS-vcHcZKlRBrlTSRvxDd7tJs_ucK', 'black', 4);
 
         drawText(toolBox, toolBoxLayer, 15, 15, 'Tools');
-        drawLineToolBox(toolBox, toolBoxLayer, 15, 45);
-        drawRectToolBox(toolBox, toolBoxLayer, 75, 45);
-        drawCircleToolBox(toolBox, toolBoxLayer, 135, 45);
-        drawTriangleToolBox(toolBox, toolBoxLayer, 15, 105);
+        drawLineToolBox(toolBox, toolBoxLayer, 15, 45, 2, 'line');
+        drawRectToolBox(toolBox, toolBoxLayer, 75, 45, 'buttonface', 'gray' ,'rect');
+        drawCircleToolBox(toolBox, toolBoxLayer, 135, 45, 'circle');
+        drawTriangleToolBox(toolBox, toolBoxLayer, 15, 105, 'triangle');
         drawText(toolBox, toolBoxLayer, 15, 175, 'Stroke and fill');
-        drawRectToolBox(toolBox, toolBoxLayer, 15, 210, null, 'blue');
-        drawRectToolBox(toolBox, toolBoxLayer, 75, 210, 'blue');
-        drawLineToolBox(toolBox, toolBoxLayer, 135, 210, 2);
-        drawLineToolBox(toolBox, toolBoxLayer, 15, 270, 4);
-        drawLineToolBox(toolBox, toolBoxLayer, 75, 270, 8);
-        drawLineToolBox(toolBox, toolBoxLayer, 135, 270, 12);
+        drawRectToolBox(toolBox, toolBoxLayer, 15, 210, 'blue', 'fill');
+        drawLineToolBox(toolBox, toolBoxLayer, 75, 210, 2, 'small');
+        drawLineToolBox(toolBox, toolBoxLayer, 135, 210, 4, 'meddium');
+        drawLineToolBox(toolBox, toolBoxLayer, 15, 270, 6, 'large');
+        drawLineToolBox(toolBox, toolBoxLayer, 75, 270, 10, 'huge');
 
 
         var i, j, rgb, palette = [];
@@ -154,6 +152,7 @@
 
         toolBoxLayer.on('click', function (e) {
             selectTool(e.target);
+            //alert(selectedTool.attrs.id); lert tool's ID
         });
 
         colorBoxLayer.on('click', function (e) {
@@ -161,23 +160,28 @@
 
         });
 
+
         stage.on('mousedown', function () {
             var mousePos = stage.getPointerPosition();
             drawnShapeBeginX = mousePos.x;
             drawnShapeBeginY = mousePos.y;
-            
+
             switch (selectedTool.className.toLowerCase()) {
                 case 'circle':
-                    currentlyDrawnShape = new CircleControl(drawnShapeBeginX, drawnShapeBeginY, 0, selectedFillColor || 'transparent',selectedColor || 'black', 1);
+                    currentlyDrawnShape = new CircleControl(drawnShapeBeginX, drawnShapeBeginY, 0, 'white',selectedColor || 'black', 1);
                     break;
                 case 'rect':
-                    currentlyDrawnShape = new FilledRectangleControl(drawnShapeBeginX, drawnShapeBeginY, 0, 0, selectedFillColor || 'transparent', selectedColor || 'black', 1);
+
+                    currentlyDrawnShape = new FilledRectangleControl(drawnShapeBeginX, drawnShapeBeginY, 0, 0, 'white', selectedColor || 'black', 1);
+
                     break;
                 case 'line':
-                    currentlyDrawnShape = new LineControl(drawnShapeBeginX, drawnShapeBeginY,[0,0], selectedFillColor || 'transparent', 1);
+                    currentlyDrawnShape = new LineControl(drawnShapeBeginX, drawnShapeBeginY,[0,0],  'black', 1);
+
                     break;
             }
         });
+
 
         stage.on('mouseup', function () {
             var mousePos = stage.getPointerPosition(),
