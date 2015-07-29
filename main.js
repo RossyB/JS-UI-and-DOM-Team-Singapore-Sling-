@@ -140,6 +140,7 @@
             toolBoxDrawer.createBox(toolBox, toolBoxLayer, 15, 210, toolBoxDrawer.RECT,'blueFillRect', undefined, 'blue');
             toolBoxDrawer.createBox(toolBox, toolBoxLayer, 75, 210, toolBoxDrawer.RECT,'blueFillRect', 'blue', undefined);
             
+            //TODO: !
             /*
         drawText(toolBox, toolBoxLayer, 15, 15, 'Tools');
         drawLineToolBox(toolBox, toolBoxLayer, 15, 45, 2, 'line');
@@ -180,11 +181,11 @@
          
             switch (selectedTool.shapeId) {
                 case 'circle':
-                    currentlyDrawnShape = new CircleControl(drawnShapeBeginX, drawnShapeBeginY, 0, fillColor || 'white', selectedColor || 'black', selectedWidth || 1);
+                    currentlyDrawnShape = new CircleControl(drawnShapeBeginX, drawnShapeBeginY, 0, fillColor || 'transparent', selectedColor || 'black', selectedWidth || 1);
                     break;
                 case 'rect':
 
-                    currentlyDrawnShape = new FilledRectangleControl(drawnShapeBeginX, drawnShapeBeginY, 0, 0, fillColor || 'white', selectedColor || 'black', selectedWidth || 1);
+                    currentlyDrawnShape = new FilledRectangleControl(drawnShapeBeginX, drawnShapeBeginY, 0, 0, fillColor || 'transparent', selectedColor || 'black', selectedWidth || 1);
 
                     break;
                 case 'line':
