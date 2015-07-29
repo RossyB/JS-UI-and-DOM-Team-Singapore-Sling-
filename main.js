@@ -129,7 +129,7 @@
         var square = new Kinetic.Rect(new FilledRectangleControl(5, 80, 60, 60, 'white', 'black', 1));
         var image = new ImageControl(30, 30, 200, 200, 'https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcTBWymOLW11o8_b8vm5kPzFTvd4I5HrS-vcHcZKlRBrlTSRvxDd7tJs_ucK', 'black', 4);
 
-        drawText(toolBox, toolBoxLayer, 15, 15, 'Tools');
+      /*drawText(toolBox, toolBoxLayer, 15, 15, 'Tools');
         drawLineToolBox(toolBox, toolBoxLayer, 15, 45);
         drawRectToolBox(toolBox, toolBoxLayer, 75, 45);
         drawCircleToolBox(toolBox, toolBoxLayer, 135, 45);
@@ -140,9 +140,17 @@
         drawLineToolBox(toolBox, toolBoxLayer, 135, 210, 2);
         drawLineToolBox(toolBox, toolBoxLayer, 15, 270, 4);
         drawLineToolBox(toolBox, toolBoxLayer, 75, 270, 8);
-        drawLineToolBox(toolBox, toolBoxLayer, 135, 270, 12);
-
-
+        drawLineToolBox(toolBox, toolBoxLayer, 135, 270, 12); */
+        
+        toolBoxDrawer.drawText(toolBox, toolBoxLayer, 15, 15, 'Tools');
+            toolBoxDrawer.createBox(toolBox, toolBoxLayer, 15, 45, toolBoxDrawer.LINE, 'line');
+            toolBoxDrawer.createBox(toolBox, toolBoxLayer, 75, 45, toolBoxDrawer.RECT, 'rect');
+            toolBoxDrawer.createBox(toolBox, toolBoxLayer, 135, 44, toolBoxDrawer.CIRCLE, 'circle');
+            toolBoxDrawer.createBox(toolBox, toolBoxLayer, 15, 105, toolBoxDrawer.TRIANGLE, 'triangle');
+        toolBoxDrawer.drawText(toolBox, toolBoxLayer, 15, 175, 'Stroke and fill');
+            toolBoxDrawer.createBox(toolBox, toolBoxLayer, 15, 210, toolBoxDrawer.RECT,'blueFillRect', undefined, 'blue');
+            toolBoxDrawer.createBox(toolBox, toolBoxLayer, 75, 210, toolBoxDrawer.RECT,'blueFillRect', 'blue', undefined);
+            
         var i, j, rgb, palette = [];
         for (i = 0; i < 4; i += 1) {
             for (j = 0; j < 7; j += 1) {
@@ -151,14 +159,12 @@
             }
         }
 
-
         toolBoxLayer.on('click', function (e) {
             selectTool(e.target);
         });
 
         colorBoxLayer.on('click', function (e) {
             selectedColor = e.target.fill();
-
         });
 
         stage.on('mousedown', function () {
@@ -166,7 +172,9 @@
             drawnShapeBeginX = mousePos.x;
             drawnShapeBeginY = mousePos.y;
             
-            switch (selectedTool.className.toLowerCase()) {
+            console.log(selectedTool);
+            
+            switch (selectedTool.shapeId) {
                 case 'circle':
                     currentlyDrawnShape = new CircleControl(drawnShapeBeginX, drawnShapeBeginY, 0, selectedFillColor || 'transparent',selectedColor || 'black', 1);
                     break;
@@ -175,6 +183,9 @@
                     break;
                 case 'line':
                     currentlyDrawnShape = new LineControl(drawnShapeBeginX, drawnShapeBeginY,[0,0], selectedFillColor || 'transparent', 1);
+                    break;
+                case 'triangle':
+                //TODO IMPLEMENT
                     break;
             }
         });
@@ -192,7 +203,7 @@
             //};
 
 
-            switch (selectedTool.className.toLowerCase()) {
+            switch (selectedTool.shapeId) {
                 case 'circle':
                     currentlyDrawnShape.radius = Math.sqrt(Math.pow((currentlyDrawnShape.x - currentX), 2) + Math.pow((currentlyDrawnShape.y - currentY), 2));
                     currentlyDrawnShape = new Kinetic.Circle(currentlyDrawnShape);
@@ -208,6 +219,9 @@
                         stroke: selectedColor ,
                         strokeWidth: 1
                     });
+                    break;
+                case 'triangle': 
+                //TODO IMPLEMENT
                     break;
             }
 
