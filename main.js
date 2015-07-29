@@ -28,7 +28,7 @@
             selectedTool,
             selectedWidth,
             fillColor,
-            selectedColor = 'black',
+            selectedColor = 'rgb(128, 255, 255)',
             currentlyDrawnShape,
             drawnShapeBeginX,
             drawnShapeBeginY;
@@ -130,40 +130,53 @@
         var circle = new Kinetic.Circle(new CircleControl(30, 30, 30, 'white', 'black', 1));
         var square = new Kinetic.Rect(new FilledRectangleControl(5, 80, 60, 60, 'white', 'black', 1));
         var image = new ImageControl(30, 30, 200, 200, 'https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcTBWymOLW11o8_b8vm5kPzFTvd4I5HrS-vcHcZKlRBrlTSRvxDd7tJs_ucK', 'black', 4);
-
-        toolBoxDrawer.drawText(toolBox, toolBoxLayer, 15, 15, 'Tools');
-        toolBoxDrawer.createBox(toolBox, toolBoxLayer, 15, 45, 2, toolBoxDrawer.LINE, 'line');
-        toolBoxDrawer.createBox(toolBox, toolBoxLayer, 75, 45, null, toolBoxDrawer.RECT, 'rect');
-        toolBoxDrawer.createBox(toolBox, toolBoxLayer, 135, 44, null, toolBoxDrawer.CIRCLE, 'circle');
-        toolBoxDrawer.createBox(toolBox, toolBoxLayer, 15, 105, null, toolBoxDrawer.TRIANGLE, 'triangle');
-        toolBoxDrawer.drawText(toolBox, toolBoxLayer, 15, 175, 'Stroke and fill');
-        toolBoxDrawer.createBox(toolBox, toolBoxLayer, 15, 210, null, toolBoxDrawer.RECT, 'blueStokeRect', undefined, 'blue');
-        toolBoxDrawer.createBox(toolBox, toolBoxLayer, 75, 210, null, toolBoxDrawer.RECT, 'blueFillRect', 'blue', undefined);
-        toolBoxDrawer.createBox(toolBox, toolBoxLayer, 135, 210, 2, toolBoxDrawer.LINE, 'small');
-        toolBoxDrawer.createBox(toolBox, toolBoxLayer, 15, 270, 4, toolBoxDrawer.LINE, 'medium');
-        toolBoxDrawer.createBox(toolBox, toolBoxLayer, 75, 270, 6, toolBoxDrawer.LINE, 'large');
-        toolBoxDrawer.createBox(toolBox, toolBoxLayer, 135, 270, 8, toolBoxDrawer.LINE, 'huge');
-
-        //TODO: !
-        /*
-         drawText(toolBox, toolBoxLayer, 15, 15, 'Tools');
-         drawLineToolBox(toolBox, toolBoxLayer, 15, 45, 2, 'line');
-         drawRectToolBox(toolBox, toolBoxLayer, 75, 45, 'buttonface', 'gray', 'rect');
-         drawCircleToolBox(toolBox, toolBoxLayer, 135, 45, 'circle');
-         drawTriangleToolBox(toolBox, toolBoxLayer, 15, 105, 'triangle');
-         drawText(toolBox, toolBoxLayer, 15, 175, 'Stroke and fill');
-         <<<<<<< HEAD
-         drawRectToolBox(toolBox, toolBoxLayer, 15, 210, null, 'blue');
-         drawRectToolBox(toolBox, toolBoxLayer, 15, 210, 'blue', 'fill');
-         =======
-         drawRectToolBox(toolBox, toolBoxLayer, 15, 210, 'blue', 'blue', 'fill');
-         drawRectToolBox(toolBox, toolBoxLayer, 135, 270, 'white', 'black', 'stroke');
-         >>>>>>> origin/master
-         drawLineToolBox(toolBox, toolBoxLayer, 75, 210, 2, 'small');
-         drawLineToolBox(toolBox, toolBoxLayer, 135, 210, 4, 'meddium');
-         drawLineToolBox(toolBox, toolBoxLayer, 15, 270, 6, 'large');
-         drawLineToolBox(toolBox, toolBoxLayer, 75, 270, 10, 'huge');
-         */
+        
+        toolBoxDrawer.setStage(stage);
+        toolBoxDrawer.setLayer(toolBoxLayer);
+        
+        toolBoxDrawer.drawText(15, 15, 'Tools');
+        
+            toolBoxDrawer.createBox(15, 45, toolBoxDrawer.LINE, 'line')
+                         .setStrokeWidth(2);
+            toolBoxDrawer.createBox(75, 45, toolBoxDrawer.RECT, 'rect');
+            toolBoxDrawer.createBox(135, 44, toolBoxDrawer.CIRCLE, 'circle');
+            toolBoxDrawer.createBox(15, 105, toolBoxDrawer.TRIANGLE, 'triangle');
+            
+        toolBoxDrawer.drawText(15, 175, 'Stroke and fill');
+        
+            toolBoxDrawer.createBox(15, 210, toolBoxDrawer.RECT,'strokedRect')
+                         .setStroke('blue');
+            toolBoxDrawer.createBox(75, 210, toolBoxDrawer.RECT,'filledRect')
+                         .setFill('blue');
+            toolBoxDrawer.createBox(135, 210, toolBoxDrawer.LINE, 'small')
+                         .setStrokeWidth(2);
+            toolBoxDrawer.createBox(15, 270, toolBoxDrawer.LINE, 'medium')
+                         .setStrokeWidth(4);
+            toolBoxDrawer.createBox(75, 270, toolBoxDrawer.LINE, 'large')
+                         .setStrokeWidth(6);
+            toolBoxDrawer.createBox(135, 270, toolBoxDrawer.LINE, 'huge')
+                         .setStrokeWidth(8);
+            
+            //TODO: !
+            /*
+        drawText(toolBox, toolBoxLayer, 15, 15, 'Tools');
+        drawLineToolBox(toolBox, toolBoxLayer, 15, 45, 2, 'line');
+        drawRectToolBox(toolBox, toolBoxLayer, 75, 45, 'buttonface', 'gray', 'rect');
+        drawCircleToolBox(toolBox, toolBoxLayer, 135, 45, 'circle');
+        drawTriangleToolBox(toolBox, toolBoxLayer, 15, 105, 'triangle');
+        drawText(toolBox, toolBoxLayer, 15, 175, 'Stroke and fill');
+<<<<<<< HEAD
+        drawRectToolBox(toolBox, toolBoxLayer, 15, 210, null, 'blue');
+        drawRectToolBox(toolBox, toolBoxLayer, 15, 210, 'blue', 'fill');
+=======
+        drawRectToolBox(toolBox, toolBoxLayer, 15, 210, 'blue', 'blue', 'fill');
+        drawRectToolBox(toolBox, toolBoxLayer, 135, 270, 'white', 'black', 'stroke');
+>>>>>>> origin/master
+        drawLineToolBox(toolBox, toolBoxLayer, 75, 210, 2, 'small');
+        drawLineToolBox(toolBox, toolBoxLayer, 135, 210, 4, 'meddium');
+        drawLineToolBox(toolBox, toolBoxLayer, 15, 270, 6, 'large');
+        drawLineToolBox(toolBox, toolBoxLayer, 75, 270, 10, 'huge');
+*/
 
         var i, j, rgb, palette = [];
         for (i = 0; i < 4; i += 1) {
@@ -175,7 +188,6 @@
 
         toolBoxLayer.on('click', function (e) {
             selectTool(e.target);
-            console.log(selectedTool.shapeId);
             switch (selectedTool.shapeId) {
                 case 'small':
                     selectedWidth = 2;
@@ -193,12 +205,12 @@
                     selectedWidth = 8;
                     break;
 
-                case 'blueFillRect':
+                case 'fill':
                     fillColor = selectedColor;
                     break;
 
-                case 'blueStokeRect':
-                    fillColor = 'transparent';
+                case 'stroke':
+                    fillColor = 'white';
                     break;
             }
         });
@@ -212,7 +224,7 @@
             var mousePos = stage.getPointerPosition();
             drawnShapeBeginX = mousePos.x;
             drawnShapeBeginY = mousePos.y;
-
+         
             switch (selectedTool.shapeId) {
                 case 'circle':
                     currentlyDrawnShape = new CircleControl(drawnShapeBeginX, drawnShapeBeginY, 0, fillColor || 'transparent', selectedColor || 'black', selectedWidth || 1);
@@ -227,7 +239,7 @@
                     break;
 
                 case 'triangle':
-                    //TODO IMPLEMENT
+                //TODO IMPLEMENT
                     break;
             }
 
@@ -264,8 +276,8 @@
                         strokeWidth: selectedWidth || 1
                     });
                     break;
-                case 'triangle':
-                    //TODO IMPLEMENT
+                case 'triangle': 
+                //TODO IMPLEMENT
                     break;
             }
 

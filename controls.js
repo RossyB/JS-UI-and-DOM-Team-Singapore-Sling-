@@ -1,7 +1,19 @@
 ﻿/// <reference path="D:\New courses\9 JavaScript UI and DOM\TeamworkPaintDotBg\TeamworkPaintDotBg\libs/kinetic-v5.1.0.js" />
 
 var toolBoxDrawer = (function(){
-    function drawText(stage, layer, x, y, text) {
+    
+    var layer,
+        stage;
+    
+    function setStage(stageToUse) {
+        stage = stageToUse;
+    }
+    
+    function setLayer(layerToUse) {
+        layer = layerToUse;
+    }
+    
+    function drawText(x, y, text) {
         var text = new Kinetic.Text({
             x: x,
             y: y,
@@ -29,10 +41,28 @@ var toolBoxDrawer = (function(){
     
     var createToolBox = (function(){
         
-        function createToolBox(stage, layer, x, y, strokeWidth, shape, id, optionalfill, optionalStroke) {
+        function setFillStyle(fillStyle) {
+            this.attrs.fill = fillStyle;
+        
+            return this;
+        }
+        
+        function setStrokeStyle(strokeStyle) {
+            this.attrs.stroke = strokeStyle;
+            
+            return this;
+        }
+        
+        function setStrokeWidth(strokeWidth) {
+            this.attrs.strokeWidth = strokeWidth;
+            
+            return this;
+        }
+        
+        function createToolBox(x, y, shape, id) {
             var outline;
             if (shape === defaultLine) {
-                shape = defaultLine(x, y, strokeWidth);
+                shape = defaultLine(x, y);
             }
             
             if (shape === defaultCircle) {
@@ -47,14 +77,6 @@ var toolBoxDrawer = (function(){
                 shape = defaultTriangle(x, y);
             }
             
-            if (optionalfill) {
-                shape.attrs.fill = optionalfill;
-            }
-            
-            if (optionalStroke) {
-                shape.attrs.stroke = optionalStroke;
-            }
-            
             outline = createBoxOutLine(x, y);
             
             outline.shapeId = id;
@@ -64,7 +86,7 @@ var toolBoxDrawer = (function(){
             layer.add(shape);
             stage.add(layer);
             
-            return this;
+            return shape;
         }
         
         return createToolBox;
@@ -110,6 +132,8 @@ var toolBoxDrawer = (function(){
     }
     
     return {
+        setStage: setStage,
+        setLayer: setLayer,
         createBox: createToolBox,
         drawText: drawText,
         LINE: defaultLine,
