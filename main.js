@@ -21,11 +21,13 @@
             height: 500
         });
 
+
         var drawLayer = new Kinetic.Layer(),
             toolBoxLayer = new Kinetic.Layer(),
             colorBoxLayer = new Kinetic.Layer(),
             selectedTool,
             selectedWidth,
+            fillColor,
             selectedColor = 'rgb(128, 255, 255)',
             currentlyDrawnShape,
             drawnShapeBeginX,
@@ -131,11 +133,12 @@
 
         drawText(toolBox, toolBoxLayer, 15, 15, 'Tools');
         drawLineToolBox(toolBox, toolBoxLayer, 15, 45, 2, 'line');
-        drawRectToolBox(toolBox, toolBoxLayer, 75, 45, 'buttonface', 'gray' ,'rect');
+        drawRectToolBox(toolBox, toolBoxLayer, 75, 45, 'buttonface', 'gray', 'rect');
         drawCircleToolBox(toolBox, toolBoxLayer, 135, 45, 'circle');
         drawTriangleToolBox(toolBox, toolBoxLayer, 15, 105, 'triangle');
         drawText(toolBox, toolBoxLayer, 15, 175, 'Stroke and fill');
-        drawRectToolBox(toolBox, toolBoxLayer, 15, 210, 'blue', 'blue','fill');
+        drawRectToolBox(toolBox, toolBoxLayer, 15, 210, 'blue', 'blue', 'fill');
+        drawRectToolBox(toolBox, toolBoxLayer, 135, 270, 'white', 'black', 'stroke');
         drawLineToolBox(toolBox, toolBoxLayer, 75, 210, 2, 'small');
         drawLineToolBox(toolBox, toolBoxLayer, 135, 210, 4, 'meddium');
         drawLineToolBox(toolBox, toolBoxLayer, 15, 270, 6, 'large');
@@ -151,7 +154,6 @@
         }
 
 
-
         toolBoxLayer.on('click', function (e) {
             selectTool(e.target);
             console.log(selectedTool.attrs.id);
@@ -162,7 +164,6 @@
         });
 
 
-
         stage.on('mousedown', function () {
             var mousePos = stage.getPointerPosition();
             drawnShapeBeginX = mousePos.x;
@@ -170,24 +171,40 @@
 
             switch (selectedTool.attrs.id) {
                 case 'circle':
-                    currentlyDrawnShape = new CircleControl(drawnShapeBeginX, drawnShapeBeginY, 0, 'white', selectedColor || 'black', selectedWidth|| 1);
+                    currentlyDrawnShape = new CircleControl(drawnShapeBeginX, drawnShapeBeginY, 0, fillColor || 'white', selectedColor || 'black', selectedWidth || 1);
                     break;
                 case 'rect':
 
-                    currentlyDrawnShape = new FilledRectangleControl(drawnShapeBeginX, drawnShapeBeginY, 0, 0, 'white', selectedColor || 'black', selectedWidth || 1);
+                    currentlyDrawnShape = new FilledRectangleControl(drawnShapeBeginX, drawnShapeBeginY, 0, 0, fillColor || 'white', selectedColor || 'black', selectedWidth || 1);
 
                     break;
                 case 'line':
-                    currentlyDrawnShape = new LineControl(drawnShapeBeginX, drawnShapeBeginY,[0,0],  'black', 1);
+                    currentlyDrawnShape = new LineControl(drawnShapeBeginX, drawnShapeBeginY, [0, 0], 'black', 1);
 
                     break;
-                case 'small': selectedWidth=2; break;
+                case 'small':
+                    selectedWidth = 2;
+                    break;
 
-                case 'meddium':selectedWidth=4; break;
+                case 'meddium':
+                    selectedWidth = 4;
+                    break;
 
-                case 'large':selectedWidth=6; break;
+                case 'large':
+                    selectedWidth = 6;
+                    break;
 
-                case 'huge': selectedWidth=8; break;
+                case 'huge':
+                    selectedWidth = 8;
+                    break;
+
+                case 'fill':
+                    fillColor = selectedColor;
+                    break;
+
+                case    'stroke':
+                    fillColor = 'white';
+                    break;
             }
 
         });
@@ -218,8 +235,8 @@
                     break;
                 case 'line':
                     currentlyDrawnShape = new Kinetic.Line({
-                        points: [drawnShapeBeginX, drawnShapeBeginY, currentX,currentY],
-                        stroke: selectedColor ,
+                        points: [drawnShapeBeginX, drawnShapeBeginY, currentX, currentY],
+                        stroke: selectedColor,
                         strokeWidth: selectedWidth || 1
                     });
                     break;
