@@ -134,6 +134,7 @@
         drawCircleToolBox(toolBox, toolBoxLayer, 135, 45, 'circle');
         drawTriangleToolBox(toolBox, toolBoxLayer, 15, 105, 'triangle');
         drawText(toolBox, toolBoxLayer, 15, 175, 'Stroke and fill');
+        drawRectToolBox(toolBox, toolBoxLayer, 15, 210, null, 'blue');
         drawRectToolBox(toolBox, toolBoxLayer, 15, 210, 'blue', 'fill');
         drawLineToolBox(toolBox, toolBoxLayer, 75, 210, 2, 'small');
         drawLineToolBox(toolBox, toolBoxLayer, 135, 210, 4, 'meddium');
