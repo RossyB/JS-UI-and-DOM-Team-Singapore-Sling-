@@ -129,36 +129,16 @@
         drawLineToolBox(toolBox, toolBoxLayer, 75, 270, 8);
         drawLineToolBox(toolBox, toolBoxLayer, 135, 270, 12);
 
-        var palette = [
-            new FilledRectangleControl(0, 0, 30, 120, 'rgb(0, 128, 255)', 'gray', 4),
-            new FilledRectangleControl(30, 0, 30, 120, 'rgb(0, 128, 192)', 'gray', 4),
-            new FilledRectangleControl(60, 0, 30, 120, 'rgb(0, 64, 128)', 'gray', 4),
-            new FilledRectangleControl(90, 0, 30, 120, 'rgb(0, 0, 255)', 'gray', 4),
-            new FilledRectangleControl(120, 0, 30, 120, 'rgb(0, 0, 160)', 'gray', 4),
-            new FilledRectangleControl(150, 0, 30, 120, 'rgb(0, 0, 128)', 'gray', 4),
-            new FilledRectangleControl(180, 0, 30, 120, 'rgb(0, 0, 64)', 'gray', 4),
-            new FilledRectangleControl(0, 120, 30, 120, 'rgb(255, 128, 128)', 'gray', 4),
-            new FilledRectangleControl(30, 120, 30, 120, 'rgb(255, 0, 0)', 'gray', 4),
-            new FilledRectangleControl(60, 120, 30, 120, 'rgb(255, 128, 64)', 'gray', 4),
-            new FilledRectangleControl(90, 120, 30, 120, 'rgb(255, 128, 0)', 'gray', 4),
-            new FilledRectangleControl(120, 120, 30, 120, 'rgb(128, 64, 0)', 'gray', 4),
-            new FilledRectangleControl(150, 120, 30, 120, 'rgb(128, 0, 0)', 'gray', 4),
-            new FilledRectangleControl(180, 120, 30, 120, 'rgb(64, 0, 0)', 'gray', 4),
-            new FilledRectangleControl(0, 240, 30, 120, 'rgb(0, 255, 128)', 'gray', 4),
-            new FilledRectangleControl(30, 240, 30, 120, 'rgb(0, 255, 64)', 'gray', 4),
-            new FilledRectangleControl(60, 240, 30, 120, 'rgb(128, 255, 0)', 'gray', 4),
-            new FilledRectangleControl(90, 240, 30, 120, 'rgb(0, 255, 0)', 'gray', 4),
-            new FilledRectangleControl(120, 240, 30, 120, 'rgb(0, 128, 0)', 'gray', 4),
-            new FilledRectangleControl(150, 240, 30, 120, 'rgb(0, 64, 0)', 'gray', 4),
-            new FilledRectangleControl(180, 240, 30, 120, 'rgb(0, 64, 64)', 'gray', 4),
-            new FilledRectangleControl(0, 360, 30, 120, 'rgb(255, 255, 255)', 'gray', 4),
-            new FilledRectangleControl(30, 360, 30, 120, 'rgb(192, 192, 192)', 'gray', 4),
-            new FilledRectangleControl(60, 360, 30, 120, 'rgb(255, 255, 0)', 'gray', 4),
-            new FilledRectangleControl(90, 360, 30, 120, 'rgb(255, 0, 255)', 'gray', 4),
-            new FilledRectangleControl(120, 360, 30, 120, 'rgb(0, 255, 255)', 'gray', 4),
-            new FilledRectangleControl(150, 360, 30, 120, 'rgb(128, 128, 64)', 'gray', 4),
-            new FilledRectangleControl(180, 360, 30, 120, 'rgb(0, 0, 0)', 'gray', 4),
-            ];
+        var i, j, rgb, palette = [];
+        for (i = 0; i < 4; i += 1) {
+            for (j = 0; j < 7; j += 1) {
+                rgb = 'rgb(' + i * 80 + ', ' + j * 40 + ', ' + i * j * 13 + ')';
+                palette.push(new FilledRectangleControl(j * 30, i * 120, 30, 120, rgb, 'gray', 4));
+            }
+        }
+
+console.log(palette);
+
 
         toolBoxLayer.on('click', function(e) {
             selectTool(e.target);
