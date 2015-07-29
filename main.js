@@ -134,7 +134,7 @@
         drawCircleToolBox(toolBox, toolBoxLayer, 135, 45, 'circle');
         drawTriangleToolBox(toolBox, toolBoxLayer, 15, 105, 'triangle');
         drawText(toolBox, toolBoxLayer, 15, 175, 'Stroke and fill');
-        drawRectToolBox(toolBox, toolBoxLayer, 15, 210, 'blue', 'fill');
+        drawRectToolBox(toolBox, toolBoxLayer, 15, 210, 'blue', 'blue','fill');
         drawLineToolBox(toolBox, toolBoxLayer, 75, 210, 2, 'small');
         drawLineToolBox(toolBox, toolBoxLayer, 135, 210, 4, 'meddium');
         drawLineToolBox(toolBox, toolBoxLayer, 15, 270, 6, 'large');
@@ -152,7 +152,7 @@
 
         toolBoxLayer.on('click', function (e) {
             selectTool(e.target);
-            //alert(selectedTool.attrs.id); lert tool's ID
+            console.log(selectedTool.attrs.id);
         });
 
         colorBoxLayer.on('click', function (e) {
