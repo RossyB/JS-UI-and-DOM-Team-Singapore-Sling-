@@ -132,13 +132,17 @@
         var image = new ImageControl(30, 30, 200, 200, 'https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcTBWymOLW11o8_b8vm5kPzFTvd4I5HrS-vcHcZKlRBrlTSRvxDd7tJs_ucK', 'black', 4);
 
         toolBoxDrawer.drawText(toolBox, toolBoxLayer, 15, 15, 'Tools');
-            toolBoxDrawer.createBox(toolBox, toolBoxLayer, 15, 45, toolBoxDrawer.LINE, 'line');
-            toolBoxDrawer.createBox(toolBox, toolBoxLayer, 75, 45, toolBoxDrawer.RECT, 'rect');
-            toolBoxDrawer.createBox(toolBox, toolBoxLayer, 135, 44, toolBoxDrawer.CIRCLE, 'circle');
-            toolBoxDrawer.createBox(toolBox, toolBoxLayer, 15, 105, toolBoxDrawer.TRIANGLE, 'triangle');
+            toolBoxDrawer.createBox(toolBox, toolBoxLayer, 15, 45, 2, toolBoxDrawer.LINE, 'line');
+            toolBoxDrawer.createBox(toolBox, toolBoxLayer, 75, 45, null, toolBoxDrawer.RECT, 'rect');
+            toolBoxDrawer.createBox(toolBox, toolBoxLayer, 135, 44, null, toolBoxDrawer.CIRCLE, 'circle');
+            toolBoxDrawer.createBox(toolBox, toolBoxLayer, 15, 105, null, toolBoxDrawer.TRIANGLE, 'triangle');
         toolBoxDrawer.drawText(toolBox, toolBoxLayer, 15, 175, 'Stroke and fill');
-            toolBoxDrawer.createBox(toolBox, toolBoxLayer, 15, 210, toolBoxDrawer.RECT,'blueFillRect', undefined, 'blue');
-            toolBoxDrawer.createBox(toolBox, toolBoxLayer, 75, 210, toolBoxDrawer.RECT,'blueFillRect', 'blue', undefined);
+            toolBoxDrawer.createBox(toolBox, toolBoxLayer, 15, 210, null, toolBoxDrawer.RECT,'blueStokeRect', undefined, 'blue');
+            toolBoxDrawer.createBox(toolBox, toolBoxLayer, 75, 210, null, toolBoxDrawer.RECT,'blueFillRect', 'blue', undefined);
+            toolBoxDrawer.createBox(toolBox, toolBoxLayer, 135, 210, 2, toolBoxDrawer.LINE, 'small');
+            toolBoxDrawer.createBox(toolBox, toolBoxLayer, 15, 270, 4, toolBoxDrawer.LINE, 'medium');
+            toolBoxDrawer.createBox(toolBox, toolBoxLayer, 75, 270, 6, toolBoxDrawer.LINE, 'large');
+            toolBoxDrawer.createBox(toolBox, toolBoxLayer, 135, 270, 8, toolBoxDrawer.LINE, 'huge');
             
             //TODO: !
             /*
@@ -171,7 +175,31 @@
 
         toolBoxLayer.on('click', function (e) {
             selectTool(e.target);
-            console.log(selectedTool.attrs.id);
+            switch (selectedTool.shapeId) {
+                case 'small':
+                    selectedWidth = 2;
+                    break;
+
+                case 'medium':
+                    selectedWidth = 4;
+                    break;
+
+                case 'large':
+                    selectedWidth = 6;
+                    break;
+
+                case 'huge':
+                    selectedWidth = 8;
+                    break;
+
+                case 'fill':
+                    fillColor = selectedColor;
+                    break;
+
+                case 'stroke':
+                    fillColor = 'white';
+                    break;
+            }
         });
 
         colorBoxLayer.on('click', function (e) {
@@ -188,38 +216,15 @@
                 case 'circle':
                     currentlyDrawnShape = new CircleControl(drawnShapeBeginX, drawnShapeBeginY, 0, fillColor || 'transparent', selectedColor || 'black', selectedWidth || 1);
                     break;
+
                 case 'rect':
-
                     currentlyDrawnShape = new FilledRectangleControl(drawnShapeBeginX, drawnShapeBeginY, 0, 0, fillColor || 'transparent', selectedColor || 'black', selectedWidth || 1);
-
                     break;
+
                 case 'line':
-                    currentlyDrawnShape = new LineControl(drawnShapeBeginX, drawnShapeBeginY, [0, 0], 'black', 1);
-
-                    break;
-                case 'small':
-                    selectedWidth = 2;
+                    currentlyDrawnShape = new LineControl(drawnShapeBeginX, drawnShapeBeginY, [0, 0], 'black', selectedWidth);
                     break;
 
-                case 'meddium':
-                    selectedWidth = 4;
-                    break;
-
-                case 'large':
-                    selectedWidth = 6;
-                    break;
-
-                case 'huge':
-                    selectedWidth = 8;
-                    break;
-
-                case 'fill':
-                    fillColor = selectedColor;
-                    break;
-
-                case    'stroke':
-                    fillColor = 'white';
-                    break;
                 case 'triangle':
                 //TODO IMPLEMENT
                     break;

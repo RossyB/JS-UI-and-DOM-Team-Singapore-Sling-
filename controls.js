@@ -29,10 +29,10 @@ var toolBoxDrawer = (function(){
     
     var createToolBox = (function(){
         
-        function createToolBox(stage, layer, x, y, shape, id, optionalfill, optionalStroke) {
+        function createToolBox(stage, layer, x, y, strokeWidth, shape, id, optionalfill, optionalStroke) {
             var outline;
             if (shape === defaultLine) {
-                shape = defaultLine(x, y);
+                shape = defaultLine(x, y, strokeWidth);
             }
             
             if (shape === defaultCircle) {
@@ -70,11 +70,11 @@ var toolBoxDrawer = (function(){
         return createToolBox;
     }());
     
-    function defaultLine(x, y) {
+    function defaultLine(x, y, strokeWidth) {
         return new Kinetic.Line({
             points: [x + 10, y + 25, x + 40, y + 25],
             stroke: 'gray',
-            strokeWidth:  2
+            strokeWidth:  strokeWidth
         });
     }
     
