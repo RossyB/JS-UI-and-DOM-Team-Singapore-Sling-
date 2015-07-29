@@ -116,5 +116,5 @@ var toolBoxDrawer = (function(){
         CIRCLE: defaultCircle,
         RECT: defaultRectangle,
         TRIANGLE: defaultTriangle
-    }
+    };
 }());

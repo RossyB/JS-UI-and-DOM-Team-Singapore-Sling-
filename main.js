@@ -21,12 +21,14 @@
             height: 500
         });
 
+
         var drawLayer = new Kinetic.Layer(),
             toolBoxLayer = new Kinetic.Layer(),
             colorBoxLayer = new Kinetic.Layer(),
             selectedTool,
+            selectedWidth,
+            fillColor,
             selectedColor = 'rgb(128, 255, 255)',
-            selectedFillColor,
             currentlyDrawnShape,
             drawnShapeBeginX,
             drawnShapeBeginY;
@@ -129,19 +131,6 @@
         var square = new Kinetic.Rect(new FilledRectangleControl(5, 80, 60, 60, 'white', 'black', 1));
         var image = new ImageControl(30, 30, 200, 200, 'https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcTBWymOLW11o8_b8vm5kPzFTvd4I5HrS-vcHcZKlRBrlTSRvxDd7tJs_ucK', 'black', 4);
 
-      /*drawText(toolBox, toolBoxLayer, 15, 15, 'Tools');
-        drawLineToolBox(toolBox, toolBoxLayer, 15, 45);
-        drawRectToolBox(toolBox, toolBoxLayer, 75, 45);
-        drawCircleToolBox(toolBox, toolBoxLayer, 135, 45);
-        drawTriangleToolBox(toolBox, toolBoxLayer, 15, 105);
-        drawText(toolBox, toolBoxLayer, 15, 175, 'Stroke and fill');
-        drawRectToolBox(toolBox, toolBoxLayer, 15, 210, null, 'blue');
-        drawRectToolBox(toolBox, toolBoxLayer, 75, 210, 'blue');
-        drawLineToolBox(toolBox, toolBoxLayer, 135, 210, 2);
-        drawLineToolBox(toolBox, toolBoxLayer, 15, 270, 4);
-        drawLineToolBox(toolBox, toolBoxLayer, 75, 270, 8);
-        drawLineToolBox(toolBox, toolBoxLayer, 135, 270, 12); */
-        
         toolBoxDrawer.drawText(toolBox, toolBoxLayer, 15, 15, 'Tools');
             toolBoxDrawer.createBox(toolBox, toolBoxLayer, 15, 45, toolBoxDrawer.LINE, 'line');
             toolBoxDrawer.createBox(toolBox, toolBoxLayer, 75, 45, toolBoxDrawer.RECT, 'rect');
@@ -151,6 +140,21 @@
             toolBoxDrawer.createBox(toolBox, toolBoxLayer, 15, 210, toolBoxDrawer.RECT,'blueFillRect', undefined, 'blue');
             toolBoxDrawer.createBox(toolBox, toolBoxLayer, 75, 210, toolBoxDrawer.RECT,'blueFillRect', 'blue', undefined);
             
+            /*
+        drawText(toolBox, toolBoxLayer, 15, 15, 'Tools');
+        drawLineToolBox(toolBox, toolBoxLayer, 15, 45, 2, 'line');
+        drawRectToolBox(toolBox, toolBoxLayer, 75, 45, 'buttonface', 'gray', 'rect');
+        drawCircleToolBox(toolBox, toolBoxLayer, 135, 45, 'circle');
+        drawTriangleToolBox(toolBox, toolBoxLayer, 15, 105, 'triangle');
+        drawText(toolBox, toolBoxLayer, 15, 175, 'Stroke and fill');
+        drawRectToolBox(toolBox, toolBoxLayer, 15, 210, 'blue', 'blue', 'fill');
+        drawRectToolBox(toolBox, toolBoxLayer, 135, 270, 'white', 'black', 'stroke');
+        drawLineToolBox(toolBox, toolBoxLayer, 75, 210, 2, 'small');
+        drawLineToolBox(toolBox, toolBoxLayer, 135, 210, 4, 'meddium');
+        drawLineToolBox(toolBox, toolBoxLayer, 15, 270, 6, 'large');
+        drawLineToolBox(toolBox, toolBoxLayer, 75, 270, 10, 'huge');
+*/
+
         var i, j, rgb, palette = [];
         for (i = 0; i < 4; i += 1) {
             for (j = 0; j < 7; j += 1) {
@@ -161,34 +165,62 @@
 
         toolBoxLayer.on('click', function (e) {
             selectTool(e.target);
+            console.log(selectedTool.attrs.id);
         });
 
         colorBoxLayer.on('click', function (e) {
             selectedColor = e.target.fill();
         });
 
+
         stage.on('mousedown', function () {
             var mousePos = stage.getPointerPosition();
             drawnShapeBeginX = mousePos.x;
             drawnShapeBeginY = mousePos.y;
-            
-            console.log(selectedTool);
-            
+         
             switch (selectedTool.shapeId) {
                 case 'circle':
-                    currentlyDrawnShape = new CircleControl(drawnShapeBeginX, drawnShapeBeginY, 0, selectedFillColor || 'transparent',selectedColor || 'black', 1);
+                    currentlyDrawnShape = new CircleControl(drawnShapeBeginX, drawnShapeBeginY, 0, fillColor || 'white', selectedColor || 'black', selectedWidth || 1);
                     break;
                 case 'rect':
-                    currentlyDrawnShape = new FilledRectangleControl(drawnShapeBeginX, drawnShapeBeginY, 0, 0, selectedFillColor || 'transparent', selectedColor || 'black', 1);
+
+                    currentlyDrawnShape = new FilledRectangleControl(drawnShapeBeginX, drawnShapeBeginY, 0, 0, fillColor || 'white', selectedColor || 'black', selectedWidth || 1);
+
                     break;
                 case 'line':
-                    currentlyDrawnShape = new LineControl(drawnShapeBeginX, drawnShapeBeginY,[0,0], selectedFillColor || 'transparent', 1);
+                    currentlyDrawnShape = new LineControl(drawnShapeBeginX, drawnShapeBeginY, [0, 0], 'black', 1);
+
+                    break;
+                case 'small':
+                    selectedWidth = 2;
+                    break;
+
+                case 'meddium':
+                    selectedWidth = 4;
+                    break;
+
+                case 'large':
+                    selectedWidth = 6;
+                    break;
+
+                case 'huge':
+                    selectedWidth = 8;
+                    break;
+
+                case 'fill':
+                    fillColor = selectedColor;
+                    break;
+
+                case    'stroke':
+                    fillColor = 'white';
                     break;
                 case 'triangle':
                 //TODO IMPLEMENT
                     break;
             }
+
         });
+
 
         stage.on('mouseup', function () {
             var mousePos = stage.getPointerPosition(),
@@ -202,8 +234,8 @@
             //    return points;
             //};
 
-
             switch (selectedTool.shapeId) {
+
                 case 'circle':
                     currentlyDrawnShape.radius = Math.sqrt(Math.pow((currentlyDrawnShape.x - currentX), 2) + Math.pow((currentlyDrawnShape.y - currentY), 2));
                     currentlyDrawnShape = new Kinetic.Circle(currentlyDrawnShape);
@@ -215,9 +247,9 @@
                     break;
                 case 'line':
                     currentlyDrawnShape = new Kinetic.Line({
-                        points: [drawnShapeBeginX, drawnShapeBeginY, currentX,currentY],
-                        stroke: selectedColor ,
-                        strokeWidth: 1
+                        points: [drawnShapeBeginX, drawnShapeBeginY, currentX, currentY],
+                        stroke: selectedColor,
+                        strokeWidth: selectedWidth || 1
                     });
                     break;
                 case 'triangle': 
@@ -247,5 +279,5 @@
         }
 
         frame();
-    }
+    };
 }());
