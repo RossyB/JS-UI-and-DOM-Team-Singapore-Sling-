@@ -25,6 +25,7 @@
             toolBoxLayer = new Kinetic.Layer(),
             colorBoxLayer = new Kinetic.Layer(),
             selectedTool,
+            selectedWidth,
             selectedColor = 'rgb(128, 255, 255)',
             currentlyDrawnShape,
             drawnShapeBeginX,
@@ -150,6 +151,7 @@
         }
 
 
+
         toolBoxLayer.on('click', function (e) {
             selectTool(e.target);
             console.log(selectedTool.attrs.id);
@@ -157,8 +159,8 @@
 
         colorBoxLayer.on('click', function (e) {
             selectedColor = e.target.fill();
-
         });
+
 
 
         stage.on('mousedown', function () {
@@ -166,20 +168,28 @@
             drawnShapeBeginX = mousePos.x;
             drawnShapeBeginY = mousePos.y;
 
-            switch (selectedTool.className.toLowerCase()) {
+            switch (selectedTool.attrs.id) {
                 case 'circle':
-                    currentlyDrawnShape = new CircleControl(drawnShapeBeginX, drawnShapeBeginY, 0, 'white',selectedColor || 'black', 1);
+                    currentlyDrawnShape = new CircleControl(drawnShapeBeginX, drawnShapeBeginY, 0, 'white', selectedColor || 'black', selectedWidth|| 1);
                     break;
                 case 'rect':
 
-                    currentlyDrawnShape = new FilledRectangleControl(drawnShapeBeginX, drawnShapeBeginY, 0, 0, 'white', selectedColor || 'black', 1);
+                    currentlyDrawnShape = new FilledRectangleControl(drawnShapeBeginX, drawnShapeBeginY, 0, 0, 'white', selectedColor || 'black', selectedWidth || 1);
 
                     break;
                 case 'line':
                     currentlyDrawnShape = new LineControl(drawnShapeBeginX, drawnShapeBeginY,[0,0],  'black', 1);
 
                     break;
+                case 'small': selectedWidth=2; break;
+
+                case 'meddium':selectedWidth=4; break;
+
+                case 'large':selectedWidth=6; break;
+
+                case 'huge': selectedWidth=8; break;
             }
+
         });
 
 
@@ -196,7 +206,7 @@
             //};
 
 
-            switch (selectedTool.className.toLowerCase()) {
+            switch (selectedTool.attrs.id) {
                 case 'circle':
                     currentlyDrawnShape.radius = Math.sqrt(Math.pow((currentlyDrawnShape.x - currentX), 2) + Math.pow((currentlyDrawnShape.y - currentY), 2));
                     currentlyDrawnShape = new Kinetic.Circle(currentlyDrawnShape);
@@ -210,7 +220,7 @@
                     currentlyDrawnShape = new Kinetic.Line({
                         points: [drawnShapeBeginX, drawnShapeBeginY, currentX,currentY],
                         stroke: selectedColor ,
-                        strokeWidth: 1
+                        strokeWidth: selectedWidth || 1
                     });
                     break;
             }
