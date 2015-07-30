@@ -58,6 +58,9 @@ var toolBoxDrawer = (function(){
             if (shape === defaultTriangle) {
                 shape = defaultTriangle(x, y);
             }
+            if (shape === defaultPencil) {
+                shape = defaultPencil(x, y);
+            }
 
             outline = createBoxOutLine(x, y);
 
@@ -113,6 +116,15 @@ var toolBoxDrawer = (function(){
         });
     }
 
+    function defaultPencil(x, y) {
+        return new Kinetic.Line({
+            points: [x + 24, y + 36, x + 41, y + 14, x + 30, y + 7, x + 13, y + 30, x + 12, y + 40],
+            stroke: 'gray',
+            closed: true,
+            strokeWidth: 2
+        });
+    }
+
     return {
         setStage: setStage,
         setLayer: setLayer,
@@ -121,6 +133,7 @@ var toolBoxDrawer = (function(){
         LINE: defaultLine,
         CIRCLE: defaultCircle,
         RECT: defaultRectangle,
-        TRIANGLE: defaultTriangle
+        TRIANGLE: defaultTriangle,
+        PENCIL: defaultPencil
     };
 }());

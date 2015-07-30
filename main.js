@@ -142,6 +142,8 @@
         toolBoxDrawer.createBox(75, 45, toolBoxDrawer.RECT, 'rect');
         toolBoxDrawer.createBox(135, 44, toolBoxDrawer.CIRCLE, 'circle');
         toolBoxDrawer.createBox(15, 105, toolBoxDrawer.TRIANGLE, 'triangle');
+        toolBoxDrawer.createBox(75, 105, toolBoxDrawer.PENCIL, 'pen')
+            .setStrokeWidth(2);
 
         toolBoxDrawer.drawText(15, 175, 'Stroke and fill');
 
