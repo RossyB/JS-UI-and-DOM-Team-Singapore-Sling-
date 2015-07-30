@@ -6,19 +6,19 @@
         var stage = new Kinetic.Stage({
             container: 'canvas-container',
             width: (window.innerWidth / 100) * 50,
-            height: 500
+            height: 510
         });
 
         var toolBox = new Kinetic.Stage({
             container: 'toolbox',
             width: (window.innerWidth / 100) * 15,
-            height: 500
+            height: 510
         });
 
         var colorBox = new Kinetic.Stage({
             container: 'colorbox',
             width: (window.innerWidth / 100) * 15,
-            height: 500
+            height: 510
         });
 
 
@@ -35,7 +35,7 @@
         /*moved [stage].add on bottom,
          so everything is displayed correctly*/
 
-        /*Not sure if i'm on the right path. // NIKI++
+        /*Not sure if i'm on the right path. // OF COURSE YOU FUCKING ARENT RADO
          This oop probably doesn't help much with the already given
          Kineticjs objects, but later lines and figures could be added perhaps.
          It is supposed to make drawing of the menu and drawing stuff on the stage
@@ -78,7 +78,7 @@
         }(Control));
 
         var FilledRectangleControl = (function (parent) {
-            FilledRectangleControl.prototype = parent.prototype;
+            FilledRectangleControl.prototype = RectangleControl.prototype;
 
             function FilledRectangleControl(x, y, width, height, fill, stroke, strokeWidth) {
                 parent.call(this, x, y, width, height, stroke, strokeWidth);
@@ -111,7 +111,7 @@
         }(RectangleControl));
 
         var CircleControl = (function (parent) {
-            CircleControl.prototype = parent.prototype;
+            CircleControl.prototype = Control.prototype;
 
             function CircleControl(x, y, radius, fill, stroke, strokeWidth) {
                 parent.call(this, x, y, stroke, strokeWidth);
@@ -120,38 +120,6 @@
             };
 
             return CircleControl;
-        }(Control));
-
-        var TriangleControl = (function (parent) {
-            TriangleControl.prototype = parent.prototype;
-
-            function TriangleControl(leftX, leftY, topX, topY, rightX, rightY, fill, stroke, strokeWidth) {
-                this.leftX = leftX;
-                this.leftY = leftY;
-                this.topX = topX;
-                this.topY = topY;
-                this.rightX = rightX;
-                this.rightY = rightY;
-                this.fill = fill;
-                this.stroke = stroke;
-                this.strokeWidth = strokeWidth;
-            }
-
-            //This doesn't work, because KineticJS '=' works from left to right(WHAT!?).
-            TriangleControl.prototype.sceneFunc = function (context) {
-                context.beginPath();
-                context.moveTo(this.leftX, this.leftY);
-                context.lineTo(this.rightX, this.rightY);
-                context.moveTo(this.rightX, this.rightY);
-                context.lineTo(this.topX, this.topY);
-                context.moveTo(this.topX, this.topY);
-                context.lineTo(this.leftX, this.leftY);
-                context.closePath();
-                // KineticJS specific context method
-                context.fillStrokeShape(this);
-            }
-
-            return TriangleControl;
         }(Control));
 
         function selectTool(tool) {
@@ -169,53 +137,59 @@
 
         toolBoxDrawer.drawText(15, 15, 'Tools');
 
-            toolBoxDrawer.createBox(15, 45, toolBoxDrawer.LINE, 'line')
-                         .setStrokeWidth(2);
-            toolBoxDrawer.createBox(75, 45, toolBoxDrawer.RECT, 'rect');
-            toolBoxDrawer.createBox(135, 44, toolBoxDrawer.CIRCLE, 'circle');
-            toolBoxDrawer.createBox(15, 105, toolBoxDrawer.TRIANGLE, 'triangle');
+        toolBoxDrawer.createBox(15, 45, toolBoxDrawer.LINE, 'line')
+            .setStrokeWidth(2);
+        toolBoxDrawer.createBox(75, 45, toolBoxDrawer.RECT, 'rect');
+        toolBoxDrawer.createBox(135, 44, toolBoxDrawer.CIRCLE, 'circle');
+        toolBoxDrawer.createBox(15, 105, toolBoxDrawer.TRIANGLE, 'triangle');
 
         toolBoxDrawer.drawText(15, 175, 'Stroke and fill');
 
-            toolBoxDrawer.createBox(15, 210, toolBoxDrawer.RECT,'strokedRect')
-                         .setStroke('blue');
-            toolBoxDrawer.createBox(75, 210, toolBoxDrawer.RECT,'filledRect')
-                         .setFill('blue');
-            toolBoxDrawer.createBox(135, 210, toolBoxDrawer.LINE, 'small')
-                         .setStrokeWidth(2);
-            toolBoxDrawer.createBox(15, 270, toolBoxDrawer.LINE, 'medium')
-                         .setStrokeWidth(4);
-            toolBoxDrawer.createBox(75, 270, toolBoxDrawer.LINE, 'large')
-                         .setStrokeWidth(6);
-            toolBoxDrawer.createBox(135, 270, toolBoxDrawer.LINE, 'huge')
-                         .setStrokeWidth(8);
+        toolBoxDrawer.createBox(15, 210, toolBoxDrawer.RECT,'strokedRect')
+            .setStroke('blue');
+        toolBoxDrawer.createBox(75, 210, toolBoxDrawer.RECT,'filledRect')
+            .setFill('blue');
+        toolBoxDrawer.createBox(135, 210, toolBoxDrawer.LINE, 'small')
+            .setStrokeWidth(2);
+        toolBoxDrawer.createBox(15, 270, toolBoxDrawer.LINE, 'medium')
+            .setStrokeWidth(4);
+        toolBoxDrawer.createBox(75, 270, toolBoxDrawer.LINE, 'large')
+            .setStrokeWidth(6);
+        toolBoxDrawer.createBox(135, 270, toolBoxDrawer.LINE, 'huge')
+            .setStrokeWidth(8);
 
-            //TODO: !
-            /*
-        drawText(toolBox, toolBoxLayer, 15, 15, 'Tools');
-        drawLineToolBox(toolBox, toolBoxLayer, 15, 45, 2, 'line');
-        drawRectToolBox(toolBox, toolBoxLayer, 75, 45, 'buttonface', 'gray', 'rect');
-        drawCircleToolBox(toolBox, toolBoxLayer, 135, 45, 'circle');
-        drawTriangleToolBox(toolBox, toolBoxLayer, 15, 105, 'triangle');
-        drawText(toolBox, toolBoxLayer, 15, 175, 'Stroke and fill');
-<<<<<<< HEAD
-        drawRectToolBox(toolBox, toolBoxLayer, 15, 210, null, 'blue');
-        drawRectToolBox(toolBox, toolBoxLayer, 15, 210, 'blue', 'fill');
-=======
-        drawRectToolBox(toolBox, toolBoxLayer, 15, 210, 'blue', 'blue', 'fill');
-        drawRectToolBox(toolBox, toolBoxLayer, 135, 270, 'white', 'black', 'stroke');
->>>>>>> origin/master
-        drawLineToolBox(toolBox, toolBoxLayer, 75, 210, 2, 'small');
-        drawLineToolBox(toolBox, toolBoxLayer, 135, 210, 4, 'meddium');
-        drawLineToolBox(toolBox, toolBoxLayer, 15, 270, 6, 'large');
-        drawLineToolBox(toolBox, toolBoxLayer, 75, 270, 10, 'huge');
-*/
+        //TODO: !
+        /*
+         drawText(toolBox, toolBoxLayer, 15, 15, 'Tools');
+         drawLineToolBox(toolBox, toolBoxLayer, 15, 45, 2, 'line');
+         drawRectToolBox(toolBox, toolBoxLayer, 75, 45, 'buttonface', 'gray', 'rect');
+         drawCircleToolBox(toolBox, toolBoxLayer, 135, 45, 'circle');
+         drawTriangleToolBox(toolBox, toolBoxLayer, 15, 105, 'triangle');
+         drawText(toolBox, toolBoxLayer, 15, 175, 'Stroke and fill');
+         <<<<<<< HEAD
+         drawRectToolBox(toolBox, toolBoxLayer, 15, 210, null, 'blue');
+         drawRectToolBox(toolBox, toolBoxLayer, 15, 210, 'blue', 'fill');
+         =======
+         drawRectToolBox(toolBox, toolBoxLayer, 15, 210, 'blue', 'blue', 'fill');
+         drawRectToolBox(toolBox, toolBoxLayer, 135, 270, 'white', 'black', 'stroke');
+         >>>>>>> origin/master
+         drawLineToolBox(toolBox, toolBoxLayer, 75, 210, 2, 'small');
+         drawLineToolBox(toolBox, toolBoxLayer, 135, 210, 4, 'meddium');
+         drawLineToolBox(toolBox, toolBoxLayer, 15, 270, 6, 'large');
+         drawLineToolBox(toolBox, toolBoxLayer, 75, 270, 10, 'huge');
+         */
 
         var i, j, rgb, palette = [];
-        for (i = 0; i < 4; i += 1) {
-            for (j = 0; j < 7; j += 1) {
-                rgb = 'rgb(' + i * 80 + ', ' + j * 40 + ', ' + i * j * 13 + ')';
-                palette.push(new FilledRectangleControl(j * 30, i * 120, 30, 120, rgb, 'gray', 4));
+        for (i = 0; i < 12; i += 1) {
+            for (j = 0; j < 10; j += 1) {
+                rgb = 'rgb(' + i * 25 + ', ' + j * 32 + ', ' + i * j * 13 + ')';
+                palette.push(new FilledRectangleControl(j * 34, i * 34, 34, 34, rgb, 'gray', 4));
+            }
+        }
+        for (i = 12; i < 15; i += 1) {
+            for (j = 0; j < 10; j += 1) {
+                rgb = 'rgb(' + i * 25 + ', ' + j * 80 + ', ' + i * j * 2 + ')';
+                palette.push(new FilledRectangleControl(j * 34, i * 34, 34, 34, rgb, 'gray', 4));
             }
         }
 
@@ -272,7 +246,8 @@
                     break;
 
                 case 'triangle':
-                    currentlyDrawnShape = new TriangleControl(drawnShapeBeginX, drawnShapeBeginY, 0, 0, 0, 0, fillColor || 'transparent', selectedColor || 'black', selectedWidth || 1);
+                    currentlyDrawnShape = new LineControl(drawnShapeBeginX, drawnShapeBeginY, [0, 0], 'black', selectedWidth);
+                    //TODO IMPLEMENT
                     break;
             }
 
@@ -310,34 +285,20 @@
                     });
                     break;
                 case 'triangle':
-                    console.log(currentX + ' ' + currentY);
-                    currentlyDrawnShape.topX = currentX;
-                    currentlyDrawnShape.topY = currentY;
-                    currentlyDrawnShape.rightX = currentlyDrawnShape.topX + (currentlyDrawnShape.topX - currentlyDrawnShape.leftX);
-                    currentlyDrawnShape.rightY = currentlyDrawnShape.leftY;
-                    var triangle = currentlyDrawnShape;
-                    currentlyDrawnShape = new Kinetic.Shape({
-                      sceneFunc: function(context) {
-                        context.beginPath();
-                        context.moveTo(triangle.leftX, triangle.leftY);
-                        context.lineTo(triangle.topX, triangle.topY);
-                        context.moveTo(triangle.topX, triangle.topY);
-                        context.lineTo(triangle.rightX, triangle.rightY);
-                        context.moveTo(triangle.rightX, triangle.rightY);
-                        context.lineTo(triangle.leftX, triangle.leftY);
-                        context.closePath();
-                        // KineticJS specific context method
-                        context.fillStrokeShape(this);
-                      },
-                      fill: triangle.fill,
-                      stroke: triangle.stroke,
-                      strokeWidth: triangle.strokeWidth
+                    var diferenceX = Math.abs(drawnShapeBeginX - currentX),
+                        diferenceY = Math.abs(drawnShapeBeginY - currentY);
+                    currentlyDrawnShape = new Kinetic.Line({
+                        points: [drawnShapeBeginX, drawnShapeBeginY, currentX - diferenceY, currentY - diferenceX,
+                            currentX + diferenceY, currentY + diferenceX],
+                        stroke: selectedColor,
+                        fill: fillColor,
+                        closed: true,
+                        strokeWidth: selectedWidth || 1
                     });
-                  break;
+                    break;
             }
 
             drawLayer.add(currentlyDrawnShape);
-            //console.log();
         });
 
         palette.forEach(function (item) {

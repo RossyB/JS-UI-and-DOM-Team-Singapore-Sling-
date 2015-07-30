@@ -1,18 +1,18 @@
 ﻿/// <reference path="D:\New courses\9 JavaScript UI and DOM\TeamworkPaintDotBg\TeamworkPaintDotBg\libs/kinetic-v5.1.0.js" />
 
 var toolBoxDrawer = (function(){
-    
+
     var layer,
         stage;
-    
+
     function setStage(stageToUse) {
         stage = stageToUse;
     }
-    
+
     function setLayer(layerToUse) {
         layer = layerToUse;
     }
-    
+
     function drawText(x, y, text) {
         var text = new Kinetic.Text({
             x: x,
@@ -22,11 +22,11 @@ var toolBoxDrawer = (function(){
             fontFamily: 'Segoe UI',
             fill: 'gray'
         });
-        
+
         layer.add(text);
         stage.add(layer);
     }
-    
+
     function createBoxOutLine(x, y) {
         return new Kinetic.Rect({
             x: x,
@@ -38,42 +38,42 @@ var toolBoxDrawer = (function(){
             strokeWidth: 2
         });
     }
-    
+
     var createToolBox = (function(){
-        
+
         function createToolBox(x, y, shape, id) {
             var outline;
             if (shape === defaultLine) {
                 shape = defaultLine(x, y);
             }
-            
+
             if (shape === defaultCircle) {
                 shape = defaultCircle(x, y);
             }
-            
+
             if (shape === defaultRectangle) {
                 shape = defaultRectangle(x, y);
             }
-            
+
             if (shape === defaultTriangle) {
                 shape = defaultTriangle(x, y);
             }
-            
+
             outline = createBoxOutLine(x, y);
-            
+
             outline.shapeId = id;
             shape.shapeId = id;
-            
+
             layer.add(outline);
             layer.add(shape);
             stage.add(layer);
-            
+
             return shape;
         }
-        
+
         return createToolBox;
     }());
-    
+
     function defaultLine(x, y, strokeWidth) {
         return new Kinetic.Line({
             points: [x + 10, y + 25, x + 40, y + 25],
@@ -81,7 +81,7 @@ var toolBoxDrawer = (function(){
             strokeWidth:  strokeWidth
         });
     }
-    
+
     function defaultCircle(x, y) {
         return new Kinetic.Circle({
             x: x + 25,
@@ -91,7 +91,7 @@ var toolBoxDrawer = (function(){
             strokeWidth: 2
         });
     }
-    
+
     function defaultRectangle(x, y) {
         return new Kinetic.Rect({
             x: x + 10,
@@ -103,7 +103,7 @@ var toolBoxDrawer = (function(){
             strokeWidth: 2
         });
     }
-    
+
     function defaultTriangle(x, y) {
         return new Kinetic.Line({
             points: [x + 10, y + 40, x + 40, y + 40, x + 25, y + 10 ],
@@ -112,7 +112,7 @@ var toolBoxDrawer = (function(){
             closed: true
         });
     }
-    
+
     return {
         setStage: setStage,
         setLayer: setLayer,
