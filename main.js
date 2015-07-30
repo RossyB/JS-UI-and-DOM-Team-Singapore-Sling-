@@ -31,7 +31,9 @@
             selectedColor = 'black',
             currentlyDrawnShape,
             drawnShapeBeginX,
-            drawnShapeBeginY;
+            drawnShapeBeginY,
+            drawingWithPen = false,
+            erasing = false;
         /*moved [stage].add on bottom,
          so everything is displayed correctly*/
 
@@ -148,17 +150,29 @@
         toolBoxDrawer.drawText(15, 175, 'Stroke and fill');
 
         toolBoxDrawer.createBox(15, 210, toolBoxDrawer.RECT,'strokedRect')
-            .setStroke('blue');
+            .setStroke('darkcyan');
         toolBoxDrawer.createBox(75, 210, toolBoxDrawer.RECT,'filledRect')
-            .setFill('blue');
-        toolBoxDrawer.createBox(135, 210, toolBoxDrawer.LINE, 'small')
+            .setFill('darkcyan')
+            .setStroke('darkcyan');
+        toolBoxDrawer.createBox(15, 270, toolBoxDrawer.LINE, 'small')
             .setStrokeWidth(2);
-        toolBoxDrawer.createBox(15, 270, toolBoxDrawer.LINE, 'medium')
+        toolBoxDrawer.createBox(75, 270, toolBoxDrawer.LINE, 'medium')
             .setStrokeWidth(4);
-        toolBoxDrawer.createBox(75, 270, toolBoxDrawer.LINE, 'large')
+        toolBoxDrawer.createBox(15, 330, toolBoxDrawer.LINE, 'large')
             .setStrokeWidth(6);
-        toolBoxDrawer.createBox(135, 270, toolBoxDrawer.LINE, 'huge')
+        toolBoxDrawer.createBox(75, 330, toolBoxDrawer.LINE, 'huge')
             .setStrokeWidth(8);
+            
+        toolBoxDrawer.drawText(15, 390, 'Eraser');
+        
+        toolBoxDrawer.createBox(15, 420, toolBoxDrawer.CIRCLE, 'eraserSmall')
+                     .setRadius(8)
+                     .setFill('white')
+                     .setStroke('darkgray');
+        toolBoxDrawer.createBox(75, 420, toolBoxDrawer.CIRCLE, 'eraserBig')
+                     .setRadius(15)
+                     .setFill('white')
+                     .setStroke('darkgray');
 
         //TODO: !
         /*
@@ -233,7 +247,7 @@
             var mousePos = stage.getPointerPosition();
             drawnShapeBeginX = mousePos.x;
             drawnShapeBeginY = mousePos.y;
-
+            
             switch (selectedTool.shapeId) {
                 case 'circle':
                     currentlyDrawnShape = new CircleControl(drawnShapeBeginX, drawnShapeBeginY, 0, fillColor || 'transparent', selectedColor || 'black', selectedWidth || 1);
@@ -251,22 +265,54 @@
                     currentlyDrawnShape = new LineControl(drawnShapeBeginX, drawnShapeBeginY, [0, 0], 'black', selectedWidth);
                     //TODO IMPLEMENT
                     break;
+                //TODO UNBUG
+                case 'eraserSmall':
+                    erasing = true;
+                    break;
+                case 'eraserBig':
+                    erasing = true;
+                    break;
+                case 'pen':
+                    currentlyDrawnShape = new Kinetic.Line({
+                        points: [drawnShapeBeginX, drawnShapeBeginY],
+                        stroke: selectedColor,
+                        strokeWidth: selectedWidth || 1
+                    });
+                    
+                    drawingWithPen = true;
+                    break;
             }
-
+            
         });
-
+        
+        stage.on('mousemove', function(){
+             if (!selectedTool) {
+                 return;
+             }
+             
+             var mousePos = stage.getPointerPosition(),
+                 currentX = mousePos.x,
+                 currentY = mousePos.y;
+                 
+             if (selectedTool.shapeId == 'pen' && drawingWithPen) {
+                 currentlyDrawnShape.attrs.points.push(currentX, currentY);
+             }
+             //TODO CONSTANTS && OPTIMISATIONS!!
+             if (selectedTool.shapeId == 'eraserSmall' && erasing) {
+                  currentlyDrawnShape = new Kinetic.Circle(new CircleControl(currentX, currentY, 2, 'white', 'white', 1));
+             }
+             
+             if (selectedTool.shapeId == 'eraserBig' && erasing) {
+                  currentlyDrawnShape = new Kinetic.Circle(new CircleControl(currentX, currentY, 5, 'white', 'white', 1));
+             }
+             
+             drawLayer.add(currentlyDrawnShape);
+        });
 
         stage.on('mouseup', function () {
             var mousePos = stage.getPointerPosition(),
                 currentX = mousePos.x,
                 currentY = mousePos.y;
-
-            //var getPoints = function () {
-            //    var points = [];
-            //    points.push(currentX);
-            //    points.push(currentY);
-            //    return points;
-            //};
 
             switch (selectedTool.shapeId) {
 
@@ -298,7 +344,17 @@
                         strokeWidth: selectedWidth || 1
                     });
                     break;
+                 case 'eraserSmall':
+                    erasing = false;
+                    break;
+                 case 'eraserBig':
+                    erasing = false;
+                    break;
+                 case 'pen':
+                    drawingWithPen = false;
+                    break;
             }
+            
 
             drawLayer.add(currentlyDrawnShape);
         });
