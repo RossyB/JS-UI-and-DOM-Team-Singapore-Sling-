@@ -10,8 +10,16 @@
         <header>
             <h1>Paint.bg</h1>
         </header>
-        <section>
 
+        <section>
+          <svg id="svgContainer" width="250" height="50" viewBox="0 0 100 100"
+               xmlns="http://www.w3.org/2000/svg"
+               xmlns:xlink="http://www.w3.org/1999/xlink">
+               <image id="paintLogo" xlink:href="icons/paint.png" x="-600" y="0" height="100" width="100" />
+               <text x="-500" y="90" fill="black" font-family='"Comic Sans MS", cursive, sans-serif' font-size="32">Paint tutorials over here -></text>
+               <rect width="50" height="50" x="-70" y="50" fill="grey" />
+               <circle cx="-45" cy="75" r="20" fill="red" />
+          </svg>
             <div id="toolbox"></div>
             <div id="canvas-container"></div>
             <div id="colorbox"></div>
@@ -22,6 +30,15 @@
     </footer>
     <script src="controls.js"></script>
     <script src="main.js"></script>
-    
+    <script type="text/javascript">
+        var svgContainer = document.getElementById('svgContainer');
+        svgContainer.setAttribute('height', 50);
+        svgContainer.setAttribute('width', (window.innerWidth / 100) * 50);
+        function uploadImage () {
+
+        }
+        //var paintLogoX = (window.innerWidth / 100) * 15 - 100;
+        //document.getElementById("paintLogo").setAttribute('x', 20);
+    </script>
 </body>
 </html>
