@@ -31,7 +31,10 @@ var drawLayer = new Kinetic.Layer(),
     drawnShapeBeginX,
     drawnShapeBeginY,
     drawingWithPen = false,
-    erasing = false;
+    erasing = false,
+    drawingRect = false,
+    drawingCircle = false,
+    drawingTriangle = false;
 
 
 function selectTool(tool) {
