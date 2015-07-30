@@ -17,7 +17,7 @@
 
         var colorBox = new Kinetic.Stage({
             container: 'colorbox',
-            width: (window.innerWidth / 100) * 15,
+            width: 340,
             height: 510
         });
 
