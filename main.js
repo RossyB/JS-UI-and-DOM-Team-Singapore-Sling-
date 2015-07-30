@@ -332,12 +332,11 @@
                         strokeWidth: selectedWidth || 1
                     });
                     break;
-                case 'triangle':
-                    var diferenceX = Math.abs(drawnShapeBeginX - currentX),
-                        diferenceY = Math.abs(drawnShapeBeginY - currentY);
+                case 'triangle':                
                     currentlyDrawnShape = new Kinetic.Line({
-                        points: [drawnShapeBeginX, drawnShapeBeginY, currentX - diferenceY, currentY - diferenceX,
-                            currentX + diferenceY, currentY + diferenceX],
+                        points: [drawnShapeBeginX, drawnShapeBeginY, 
+                                 currentX, currentY,
+                                 2 * drawnShapeBeginX - currentX, currentY],
                         stroke: selectedColor,
                         fill: fillColor,
                         closed: true,
