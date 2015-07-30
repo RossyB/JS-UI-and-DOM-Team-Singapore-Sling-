@@ -21,7 +21,6 @@ header, footer{
 }
 
 section{
-    //width: 1000px;
     display: inline-block;
     padding: 5px 15px;
     margin: 0 auto;
