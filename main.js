@@ -19,33 +19,22 @@ var colorBox = new Kinetic.Stage({
     height: 510
 });
 
-
 var drawLayer = new Kinetic.Layer(),
     toolBoxLayer = new Kinetic.Layer(),
     colorBoxLayer = new Kinetic.Layer(),
     selectedTool,
-    selectedWidth,
-    fillColor,
-    selectedColor = 'black',
+    selectedWidth = 1,
+    selectedfillColor = 'transparent',
+    selectedStrokeColor = 'black',
+    selectedColorBoxColor = 'transparent',
     currentlyDrawnShape,
     drawnShapeBeginX,
     drawnShapeBeginY,
     drawingWithPen = false,
     erasing = false,
-    drawingRect = false,
-    drawingCircle = false,
-    drawingTriangle = false;
-
+    fillJustClicked = false,
+    strokeJustClicked = false;
 
 function selectTool(tool) {
     selectedTool = tool;
-    console.log(selectedTool.shapeId);
-}
-
-function save() {
-    var dataUrl = stage.toDataURL({
-      callback: function(dataUrl) {
-          window.open(dataUrl);
-      }
-    });
 }

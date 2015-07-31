@@ -8,38 +8,43 @@ toolBoxDrawer.setLayer(toolBoxLayer);
 
 toolBoxDrawer.drawText(15, 15, 'Tools');
 
-toolBoxDrawer.createBox(15, 45, toolBoxDrawer.LINE, 'line')
+toolBoxDrawer.createBox(15, 45, toolBoxDrawer.LINE, 'line', 'tool')
              .setStrokeWidth(2);
-toolBoxDrawer.createBox(75, 45, toolBoxDrawer.RECT, 'rect');
-toolBoxDrawer.createBox(135, 44, toolBoxDrawer.CIRCLE, 'circle');
-toolBoxDrawer.createBox(15, 105, toolBoxDrawer.TRIANGLE, 'triangle');
-toolBoxDrawer.createBox(75, 105, toolBoxDrawer.PENCIL, 'pen')
-             .setStrokeWidth(2);
+toolBoxDrawer.createBox(75, 45, toolBoxDrawer.RECT, 'rect', 'tool');
+toolBoxDrawer.createBox(135, 44, toolBoxDrawer.CIRCLE, 'circle', 'tool');
+toolBoxDrawer.createBox(15, 105, toolBoxDrawer.TRIANGLE, 'triangle', 'tool');
+selectTool(toolBoxDrawer.createBox(75, 105, toolBoxDrawer.PENCIL, 'pen', 'tool')
+             .setStrokeWidth(2));
 
 toolBoxDrawer.drawText(15, 175, 'Stroke and fill');
 
-toolBoxDrawer.createBox(15, 210, toolBoxDrawer.RECT,'strokedRect')
-             .setStroke('darkcyan');
-toolBoxDrawer.createBox(75, 210, toolBoxDrawer.RECT,'filledRect')
-             .setFill('darkcyan')
-             .setStroke('darkcyan');
-toolBoxDrawer.createBox(15, 270, toolBoxDrawer.LINE, 'small')
+var strokeBox = toolBoxDrawer.createBox(15, 210, toolBoxDrawer.RECT,'strokedRect', 'stroke');
+    strokeBox.setStroke('darkcyan');
+             
+var fillBox = toolBoxDrawer.createBox(75, 210, toolBoxDrawer.RECT,'filledRect', 'fill');
+    fillBox.setFill('darkcyan');
+    fillBox.setStroke('darkcyan');
+toolBoxDrawer.createBox(15, 270, toolBoxDrawer.LINE, 'small', 'lineWidth')
              .setStrokeWidth(2);
-toolBoxDrawer.createBox(75, 270, toolBoxDrawer.LINE, 'medium')
+toolBoxDrawer.createBox(75, 270, toolBoxDrawer.LINE, 'medium', 'lineWidth')
              .setStrokeWidth(4);
-toolBoxDrawer.createBox(15, 330, toolBoxDrawer.LINE, 'large')
+toolBoxDrawer.createBox(15, 330, toolBoxDrawer.LINE, 'large', 'lineWidth')
              .setStrokeWidth(6);
-toolBoxDrawer.createBox(75, 330, toolBoxDrawer.LINE, 'huge')
+toolBoxDrawer.createBox(75, 330, toolBoxDrawer.LINE, 'huge', 'lineWidth')
              .setStrokeWidth(8);
     
 toolBoxDrawer.drawText(15, 390, 'Eraser');
 
-toolBoxDrawer.createBox(15, 420, toolBoxDrawer.CIRCLE, 'eraserSmall')
+toolBoxDrawer.createBox(15, 420, toolBoxDrawer.CIRCLE, 'eraserSmall', 'tool')
              .setRadius(10)
              .setFill('white')
              .setStroke('darkgray');
-toolBoxDrawer.createBox(75, 420, toolBoxDrawer.CIRCLE, 'eraserBig')
+toolBoxDrawer.createBox(75, 420, toolBoxDrawer.CIRCLE, 'eraserBig', 'tool')
              .setRadius(17)
+             .setFill('white')
+             .setStroke('darkgray');
+toolBoxDrawer.createBox(135, 420, toolBoxDrawer.CIRCLE, 'eraserBiggest', 'tool')
+             .setRadius(23)
              .setFill('white')
              .setStroke('darkgray');
 
@@ -75,7 +80,8 @@ toolBox.add(toolBoxLayer);
 
 function frame() {
     drawLayer.drawScene();
-    setTimeout(frame, 100);
+    toolBoxLayer.drawScene();
+    setTimeout(frame, 10);
 }
 
 frame();
