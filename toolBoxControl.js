@@ -41,7 +41,7 @@ var toolBoxDrawer = (function(){
 
     var createToolBox = (function(){
 
-        function createToolBox(x, y, shape, id) {
+        function createToolBox(x, y, shape, id, shapeType) {
             var outline;
             if (shape === defaultLine) {
                 shape = defaultLine(x, y);
@@ -65,7 +65,9 @@ var toolBoxDrawer = (function(){
             outline = createBoxOutLine(x, y);
 
             outline.shapeId = id;
+            outline.shapeType = shapeType;
             shape.shapeId = id;
+            shape.shapeType = shapeType;
 
             layer.add(outline);
             layer.add(shape);
