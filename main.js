@@ -33,8 +33,19 @@ var drawLayer = new Kinetic.Layer(),
     drawingWithPen = false,
     erasing = false,
     fillJustClicked = false,
-    strokeJustClicked = false;
+    strokeJustClicked = false,
+    drawingRect = false,
+    drawingCircle = false,
+    drawingTriangle = false;
 
 function selectTool(tool) {
     selectedTool = tool;
+}
+
+function save() {
+    var dataUrl = stage.toDataURL({
+      callback: function(dataUrl) {
+          window.open(dataUrl);
+      }
+    });
 }

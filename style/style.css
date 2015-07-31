@@ -34,6 +34,6 @@ section{
 
 #svgContainer {
   display: block;
-  margin: auto;
-  text-align: left;
+  //text-align: left;
+  background-color: darkcyan;
 }
