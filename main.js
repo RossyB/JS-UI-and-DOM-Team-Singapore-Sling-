@@ -41,3 +41,11 @@ function selectTool(tool) {
     selectedTool = tool;
     console.log(selectedTool.shapeId);
 }
+
+function save() {
+    var dataUrl = stage.toDataURL({
+      callback: function(dataUrl) {
+          window.open(dataUrl);
+      }
+    });
+}
