@@ -29,19 +29,19 @@ toolBoxLayer.on('click', function (e) {
 });
 
 colorBoxLayer.on('click', function (e) {
-    selectedStrokeColorBoxColor = e.target.fill();
+    selectedColorBoxColor = e.target.fill();
 
     console.log(e.target);
 
     if (fillJustClicked) {
-        selectedfillColor = selectedStrokeColorBoxColor;
-        fillBox.setFill(selectedStrokeColorBoxColor);
-        fillBox.setStroke(selectedStrokeColorBoxColor);
+        selectedfillColor = selectedColorBoxColor;
+        fillBox.setFill(selectedColorBoxColor);
+        fillBox.setStroke(selectedColorBoxColor);
     }
 
     if (strokeJustClicked) {
-        selectedStrokeColor = selectedStrokeColorBoxColor;
-        strokeBox.setStroke(selectedStrokeColorBoxColor);
+        selectedStrokeColor = selectedColorBoxColor;
+        strokeBox.setStroke(selectedColorBoxColor);
     }
 
     toolBoxLayer.add(fillBox);
@@ -55,21 +55,21 @@ stage.on('mousedown', function () {
 
     switch (selectedTool.shapeId) {
       case 'circle':
-          currentlyDrawnShape = new CircleControl(drawnShapeBeginX, drawnShapeBeginY, 0, fillColor || 'transparent', selectedStrokeColor || 'black', selectedWidth || 1);
+          currentlyDrawnShape = new CircleControl(drawnShapeBeginX, drawnShapeBeginY, 0, selectedfillColor || 'transparent', selectedStrokeColor || 'black', selectedWidth || 1);
           drawingCircle = true;
           break;
 
       case 'rect':
-          currentlyDrawnShape = new FilledRectangleControl(drawnShapeBeginX, drawnShapeBeginY, 0, 0, fillColor || 'transparent', selectedStrokeColor || 'black', selectedWidth || 1);
+          currentlyDrawnShape = new FilledRectangleControl(drawnShapeBeginX, drawnShapeBeginY, 0, 0, selectedfillColor || 'transparent', selectedStrokeColor || 'black', selectedWidth || 1);
           drawingRect = true;
           break;
 
       case 'line':
-          currentlyDrawnShape = new LineControl(drawnShapeBeginX, drawnShapeBeginY, [0, 0], 'black', selectedWidth);
+          currentlyDrawnShape = new LineControl(drawnShapeBeginX, drawnShapeBeginY, [0, 0], selectedStrokeColor || 'black', selectedWidth);
           break;
 
       case 'triangle':
-          currentlyDrawnShape = new LineControl(drawnShapeBeginX, drawnShapeBeginY, [0, 0], 'black', selectedWidth);
+          currentlyDrawnShape = new LineControl(drawnShapeBeginX, drawnShapeBeginY, [0, 0], selectedStrokeColor || 'black', selectedWidth);
           drawingTriangle = true;
             break;
         //TODO UNBUG
@@ -119,20 +119,20 @@ stage.on('mousemove', function(){
      if (selectedTool.shapeId == 'eraserBiggest' && erasing) {
           currentlyDrawnShape = new Kinetic.Circle(new CircleControl(currentX, currentY, 14, 'white', 'white', 1));
      }
-
+     
+     var clear;
+     
      if (selectedTool.shapeId == 'rect' && drawingRect) {
-          currentlyDrawnShape = new Kinetic.Rect(new FilledRectangleControl(drawnShapeBeginX, drawnShapeBeginY, currentX, currentY, fillColor || 'transparent', selectedStrokeColor || 'black', selectedWidth || 1));
-          var clear = new Kinetic.Rect(new FilledRectangleControl(drawnShapeBeginX, drawnShapeBeginY, currentX, currentY, 'white', 'white', selectedWidth || 1));
-          drawLayer.add(clear);
+          currentlyDrawnShape = new Kinetic.Rect(new FilledRectangleControl(drawnShapeBeginX, drawnShapeBeginY, currentX, currentY, selectedfillColor || 'transparent', selectedStrokeColor || 'black', selectedWidth || 1));
+          clear = new Kinetic.Rect(new FilledRectangleControl(drawnShapeBeginX, drawnShapeBeginY, currentX, currentY, 'white', 'white', selectedWidth || 1));
       }
 
       if (selectedTool.shapeId == 'circle' && drawingCircle) {
         console.log("HERE");
           var radius = Math.sqrt(Math.abs(currentX - drawnShapeBeginX) * 2
               + Math.abs(currentY - drawnShapeBeginY) * 2);
-          currentlyDrawnShape = new Kinetic.Circle(new CircleControl(drawnShapeBeginX, drawnShapeBeginY, radius, fillColor || 'transparent', selectedStrokeColor || 'black', selectedWidth || 1));
-          var clear = new Kinetic.Circle(new CircleControl(drawnShapeBeginX, drawnShapeBeginY, radius, 'white', 'white', selectedWidth || 1));;
-          drawLayer.add(clear);
+          currentlyDrawnShape = new Kinetic.Circle(new CircleControl(drawnShapeBeginX, drawnShapeBeginY, radius, selectedfillColor || 'transparent', selectedStrokeColor || 'black', selectedWidth || 1));
+          clear = new Kinetic.Circle(new CircleControl(drawnShapeBeginX, drawnShapeBeginY, radius, 'white', 'white', selectedWidth || 1));;
       }
 
       if (selectedTool.shapeId == 'triangle' && drawingTriangle) {
@@ -141,19 +141,21 @@ stage.on('mousemove', function(){
                        currentX, currentY,
                        2 * drawnShapeBeginX - currentX, currentY],
               stroke: selectedStrokeColor,
-              fill: fillColor,
+              fill: selectedfillColor,
               closed: true,
               strokeWidth: selectedWidth || 1
           });
           var startX = drawnShapeBeginX - (currentX - drawnShapeBeginX);
-          var clear = new Kinetic.Rect(new FilledRectangleControl(startX, drawnShapeBeginY, currentX, currentY, 'white', 'white', selectedWidth || 1));
-          drawLayer.add(clear);
+          clear = new Kinetic.Rect(new FilledRectangleControl(startX, drawnShapeBeginY, currentX, currentY, 'white', 'white', selectedWidth || 1));
       }
-
+      
+     if (clear) {
+         drawLayer.add(clear);
+     }
+     
      drawLayer.add(currentlyDrawnShape);
 });
-//here niki is         stupid
-//its late now and he is ^
+
 stage.on('mouseup', function () {
     var mousePos = stage.getPointerPosition(),
         currentX = mousePos.x,
@@ -185,7 +187,7 @@ stage.on('mouseup', function () {
                        currentX, currentY,
                        2 * drawnShapeBeginX - currentX, currentY],
               stroke: selectedStrokeColor,
-              fill: fillColor,
+              fill: selectedfillColor,
               closed: true,
               strokeWidth: selectedWidth || 1
           });
